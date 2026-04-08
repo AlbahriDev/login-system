@@ -712,7 +712,44 @@
         const userEmailSpan = document.getElementById('userEmail');
         const userAvatar = document.getElementById('userAvatar');
         const defaultIcon = document.getElementById('defaultIcon');
-        const logoutBtn = document.getElementById('logoutBtn');
+        // ==========================================
+// تسجيل الخروج - مع Node.js Backend
+// ==========================================
+const logoutBtn = document.getElementById('logoutBtn');
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+        try {
+            // إرسال طلب تسجيل الخروج إلى الخادم
+            const response = await fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // عرض رسالة
+                showToast('تم تسجيل الخروج بنجاح، جاري التحويل...');
+                
+                // إخفاء شاشة الترحيب
+                welcomeScreen.classList.remove('active');
+                
+                // الانتقال إلى صفحة welcome.html
+                setTimeout(() => {
+                    window.location.href = 'welcome.html';
+                }, 500);
+            } else {
+                showToast('حدث خطأ أثناء تسجيل الخروج', true);
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            showToast('حدث خطأ في الاتصال بالخادم', true);
+        }
+    });
+}
 
         function showWelcomeScreen(user, method) {
             welcomeName.textContent = `مرحباً، ${user.displayName || user.email.split('@')[0]}`;
@@ -956,19 +993,30 @@
             }
         });
 
-        // ==========================================
-        // 10. Logout
-        // ==========================================
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await auth.signOut();
-                welcomeScreen.classList.remove('active');
-                loginForm.reset();
-                showToast('تم تسجيل الخروج بنجاح');
-            } catch (error) {
-                showToast('حدث خطأ أثناء تسجيل الخروج', true);
-            }
-        });
+    
+// 10. Logout - الانتقال إلى صفحة welcome.html
+// ==========================================
+logoutBtn.addEventListener('click', async () => {
+    try {
+        // تسجيل الخروج من Firebase
+        await auth.signOut();
+        
+        // إخفاء شاشة الترحيب
+        welcomeScreen.classList.remove('active');
+        
+        // عرض رسالة للمستخدم
+        showToast('تم تسجيل الخروج بنجاح، جاري التحويل...');
+        
+        // الانتقال إلى صفحة welcome.html بعد نصف ثانية
+        setTimeout(() => {
+            window.location.href = 'welcome.html';
+        }, 500);
+        
+    } catch (error) {
+        showToast('حدث خطأ أثناء تسجيل الخروج', true);
+        console.error(error);
+    }
+});
 
         // ==========================================
         // 11. Check existing session
