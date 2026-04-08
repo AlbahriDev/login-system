@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+// ✅ استخدم PORT من البيئة أو 3000 كقيمة افتراضية
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -129,7 +130,8 @@ app.post('/api/logout', (req, res) => {
     res.json({ success: true });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+// ✅ استمع على جميع العناوين (0.0.0.0) وليس localhost فقط
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
     console.log(`📱 الصفحة الرئيسية: http://localhost:${PORT}/`);
 });
