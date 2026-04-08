@@ -1,0 +1,14 @@
+{
+  "name": "login-system",
+  "version": "1.0.0",
+  "description": "Modern login system with 3D effects",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.17.3"
+  }
+}

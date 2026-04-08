@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>مرحباً بك - منصة النور</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f0f4ff 0%, #e9eef9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية لطيفة فاتحة مع دوائر خفيفة */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(150, 170, 220, 0.15);
+            animation: floatSoft 22s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatSoft {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(40px, -30px) scale(1.3);
+            }
+        }
+
+        /* الحاوية الرئيسية */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 580px;
+            perspective: 1200px;
+        }
+
+        /* أنيميشن الظهور الأولي */
+        .fade-zoom {
+            animation: gentleAppear 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+
+        @keyframes gentleAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* كارد البطاقة الرئيسية - تصميم فاتح وانيق */
+        .hero-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border-radius: 56px;
+            padding: 52px 42px;
+            text-align: center;
+            box-shadow: 0 35px 65px rgba(100, 110, 140, 0.2), 0 0 0 1px rgba(255,255,240,0.8);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,245,0.9);
+        }
+
+        .hero-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 45px 80px rgba(90, 100, 130, 0.25);
+        }
+
+        /* أيقونة رائعة متحركة */
+        .icon-wrapper {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(125deg, #8b9eff, #a28df1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+            box-shadow: 0 18px 35px rgba(120, 100, 220, 0.3);
+            animation: gentlePulse 2.2s infinite ease-in-out;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 18px 35px rgba(120, 100, 220, 0.3);
+            }
+            50% {
+                transform: scale(1.06);
+                box-shadow: 0 28px 50px rgba(120, 100, 220, 0.5);
+            }
+        }
+
+        .icon-wrapper svg {
+            width: 58px;
+            height: 58px;
+            color: white;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            background: linear-gradient(115deg, #1f2b48, #4c3b82);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: -0.3px;
+        }
+
+        .subtitle {
+            color: #5b6e8c;
+            font-size: 1.12rem;
+            font-weight: 500;
+            margin-bottom: 48px;
+            line-height: 1.65;
+        }
+
+        /* أزرار مميزة */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            margin-bottom: 38px;
+        }
+
+        .btn {
+            padding: 18px 28px;
+            border: none;
+            border-radius: 100px;
+            font-size: 1.12rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* تأثير الـ Ripple الجميل */
+        .btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: rippleAnim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        .btn-login {
+            background: linear-gradient(105deg, #6d5df2, #9566e0);
+            color: white;
+            box-shadow: 0 12px 28px rgba(109, 93, 242, 0.35);
+            border: 1px solid rgba(255,255,245,0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 38px rgba(109, 93, 242, 0.45);
+            background: linear-gradient(105deg, #7f6eff, #a87aec);
+        }
+
+        .btn-signup {
+            background: white;
+            color: #6d5df2;
+            border: 2px solid #e4eafe;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-4px);
+            background: #fefeff;
+            border-color: #cbdaff;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.25s ease;
+        }
+
+        .btn-login:hover svg {
+            transform: translateX(-5px);
+        }
+
+        .btn-signup:hover svg {
+            transform: translateX(-5px);
+        }
+
+        /* الفاصل الأنيق */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #8d9bb0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 20px 0 20px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1.5px dashed #dce3f0;
+        }
+
+        .divider:not(:empty)::before {
+            margin-left: 18px;
+        }
+
+        .divider:not(:empty)::after {
+            margin-right: 18px;
+        }
+
+        .info-text {
+            color: #6f85a3;
+            font-size: 0.85rem;
+            margin-top: 22px;
+        }
+
+        .info-text a {
+            color: #7c6af0;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+
+        .info-text a:hover {
+            color: #4e3bc2;
+            text-decoration: underline;
+        }
+
+        /* أنيميشن قلب الصفحة مثل الدفتر (Flip Book Effect) */
+        .flip-out {
+            animation: flipPageOut 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+
+        @keyframes flipPageOut {
+            0% {
+                transform: perspective(800px) rotateY(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: perspective(800px) rotateY(-90deg);
+                opacity: 0;
+            }
+        }
+
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 550px) {
+            .hero-card {
+                padding: 38px 24px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            .icon-wrapper {
+                width: 85px;
+                height: 85px;
+            }
+            .icon-wrapper svg {
+                width: 46px;
+                height: 46px;
+            }
+        }
+
+        /* تأثير عند النقر */
+        .btn:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background" id="bgOrbs"></div>
+
+    <div class="container" id="mainContainer">
+        <div class="hero-card fade-zoom" id="heroCard">
+            <div class="icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    <path d="M12 22V12" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="2.2" fill="white" stroke="none"/>
+                </svg>
+            </div>
+            <h1>مرحباً بك</h1>
+            <p class="subtitle">
+                منصة عصرية بلمسات أنيقة<br>اختر مسارك للمتابعة
+            </p>
+
+            <div class="buttons">
+                <button class="btn btn-login" id="loginBtn">
+                    <span>تسجيل الدخول</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <button class="btn btn-signup" id="signupBtn">
+                    <span>إنشاء حساب جديد</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke-linecap="round"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="divider">
+                ✨ بيئة آمنة وموثوقة ✨
+            </div>
+
+            <div class="info-text">
+                بالضغط على أي من الخيارات، أنت توافق على 
+                <a href="#">شروط الخدمة</a> 
+                و 
+                <a href="#">سياسة الخصوصية</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---- خلفية ديناميكية ناعمة ----
+            const bgWrapper = document.getElementById('bgOrbs');
+            function createSoftOrbs() {
+                for (let i = 0; i < 18; i++) {
+                    const orb = document.createElement('div');
+                    orb.classList.add('bg-orb');
+                    const size = Math.random() * 140 + 40;
+                    orb.style.width = size + 'px';
+                    orb.style.height = size + 'px';
+                    orb.style.top = Math.random() * 100 + '%';
+                    orb.style.left = Math.random() * 100 + '%';
+                    orb.style.animationDuration = (Math.random() * 25 + 15) + 's';
+                    orb.style.animationDelay = (Math.random() * 8) + 's';
+                    orb.style.background = `rgba(140, 160, 230, ${Math.random() * 0.12 + 0.04})`;
+                    bgWrapper.appendChild(orb);
+                }
+            }
+            createSoftOrbs();
+
+            // ---- تأثير Ripple للأزرار ----
+            function addRipple(button) {
+                button.addEventListener('click', function(e) {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const rippleSpan = document.createElement('span');
+                    rippleSpan.className = 'ripple';
+                    rippleSpan.style.left = x + 'px';
+                    rippleSpan.style.top = y + 'px';
+                    rippleSpan.style.width = rippleSpan.style.height = Math.max(rect.width, rect.height) + 'px';
+                    button.style.position = 'relative';
+                    button.appendChild(rippleSpan);
+                    setTimeout(() => rippleSpan.remove(), 600);
+                });
+            }
+
+            const container = document.getElementById('mainContainer');
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+
+            // دالة الانتقال مع تأثير قلب الصفحة
+            function navigateWithFlip(url) {
+                if (!container) return;
+                
+                // إضافة تأثير الفليب
+                container.classList.add('flip-out');
+                
+                // وميض خفيف
+                const flash = document.createElement('div');
+                flash.style.position = 'fixed';
+                flash.style.top = '0';
+                flash.style.left = '0';
+                flash.style.width = '100%';
+                flash.style.height = '100%';
+                flash.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                flash.style.pointerEvents = 'none';
+                flash.style.zIndex = '999';
+                flash.style.opacity = '0';
+                flash.style.transition = 'opacity 0.2s';
+                document.body.appendChild(flash);
+                setTimeout(() => flash.style.opacity = '1', 10);
+                setTimeout(() => flash.style.opacity = '0', 200);
+                setTimeout(() => flash.remove(), 300);
+                
+                // بعد انتهاء الأنيميشن ننتقل للصفحة المطلوبة
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 250);
+            }
+            
+            // ربط أزرار تسجيل الدخول
+            if (loginBtn) {
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateWithFlip('login.html');
+                });
+                addRipple(loginBtn);
+            }
+            
+            // ربط أزرار إنشاء حساب
+            if (signupBtn) {
+                signupBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigateWithFlip('signup.html');
+                });
+                addRipple(signupBtn);
+            }
+            
+            // معالجة العودة إلى الصفحة - تظهر بشكل طبيعي 100%
+            window.addEventListener('pageshow', function(event) {
+                // إزالة أي تأثير فليب متبقي
+                if (container) {
+                    container.classList.remove('flip-out');
+                    // إعادة تعيين أي أنيميشن عالق
+                    container.style.animation = 'none';
+                    // إعادة الظهور بشكل طبيعي
+                    setTimeout(() => {
+                        container.style.animation = '';
+                    }, 10);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
