@@ -1,563 +1,847 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إنشاء حساب </title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>إنشاء حساب | Rento & Plantland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Cairo', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #f5f7ff 0%, #e8ecff 50%, #f0f3ff 100%);
-      position: relative;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+        }
 
-    body::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 40%, rgba(255,255,240,0.8) 0%, rgba(248,245,255,0.9) 100%);
-      z-index: 0;
-    }
+        /* ========================================
+           تصميم الكمبيوتر - Rento Style (شاشة منقسمة)
+           ======================================== */
+        .desktop-layout {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
 
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.4;
-      z-index: 0;
-      animation: floatBlob 20s infinite ease-in-out;
-    }
+        .hero-section {
+            flex: 1;
+            background: linear-gradient(145deg, #0a0a2a 0%, #0f0f3a 50%, #1a1a4e 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 3rem;
+        }
 
-    .blob-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, #c7b9ff, #e0d5ff);
-      top: -150px;
-      right: -150px;
-    }
+        .hero-section .bg-circle-1 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            border-radius: 50%;
+            animation: float1 12s ease-in-out infinite;
+        }
 
-    .blob-2 {
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, #ffd9e8, #ffe6f0);
-      bottom: -100px;
-      left: -100px;
-    }
+        .hero-section .bg-circle-2 {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            bottom: -50px;
+            left: -80px;
+            border-radius: 50%;
+            animation: float2 10s ease-in-out infinite reverse;
+        }
 
-    @keyframes floatBlob {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
-    }
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
 
-    .container {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 500px;
-      padding: 20px;
-      margin: 20px;
-      animation: slideUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-40px, 20px) scale(1.2); }
+        }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 400px;
+        }
 
-    .pure-card {
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 48px;
-      padding: 48px 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(156, 163, 175, 0.05);
-      transition: all 0.4s ease;
-    }
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+        }
 
-    .header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
+        .hero-logo svg {
+            width: 45px;
+            height: 45px;
+            color: white;
+        }
 
-    .icon-wrapper {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(145deg, #ffffff, #f8faff);
-      border-radius: 28px;
-      margin-bottom: 24px;
-      box-shadow: 0 12px 24px -8px rgba(99, 102, 241, 0.12);
-    }
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
 
-    .icon-wrapper i {
-      font-size: 44px;
-      background: linear-gradient(145deg, #6366f1, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+        .hero-content p {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
 
-    .header h1 {
-      font-size: 34px;
-      font-weight: 800;
-      background: linear-gradient(145deg, #1e1b4b, #312e81);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-    }
+        .form-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 2rem;
+        }
 
-    .header p {
-      color: #6b7280;
-      font-size: 16px;
-      font-weight: 500;
-    }
+        .form-container {
+            max-width: 450px;
+            width: 100%;
+        }
 
-    .field {
-      margin-bottom: 28px;
-      position: relative;
-    }
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-    .field-input {
-      width: 100%;
-      padding: 16px 20px;
-      font-size: 16px;
-      font-family: 'Cairo', sans-serif;
-      background: #ffffff;
-      border: 2px solid #e9eaf0;
-      border-radius: 24px;
-      outline: none;
-      color: #1f2937;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
+        .form-header h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
 
-    .field-input:focus {
-      border-color: #818cf8;
-      box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.1);
-    }
+        .form-header p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
 
-    .field-label {
-      position: absolute;
-      right: 20px;
-      top: 16px;
-      font-size: 15px;
-      color: #9ca3af;
-      font-weight: 500;
-      pointer-events: none;
-      transition: all 0.2s ease;
-      background: white;
-      padding: 0 6px;
-    }
+        /* ========================================
+           تصميم الهاتف - Plantland Style (نباتات)
+           ======================================== */
+        .mobile-layout {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .field-input:focus ~ .field-label,
-    .field-input:not(:placeholder-shown) ~ .field-label {
-      top: -12px;
-      right: 16px;
-      font-size: 12px;
-      color: #6366f1;
-      font-weight: 700;
-      background: white;
-    }
+        .mobile-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+        }
 
-    .field-input::placeholder {
-      color: transparent;
-    }
+        .tree {
+            position: absolute;
+            bottom: 0;
+            left: -50px;
+            width: 300px;
+            height: 400px;
+            opacity: 0.2;
+        }
 
-    .field-icon {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #cbd5e1;
-      transition: color 0.3s;
-      cursor: pointer;
-    }
+        .tree .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 30px;
+            height: 150px;
+            background: #5d4037;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
 
-    .btn-primary {
-      width: 100%;
-      padding: 18px 24px;
-      background: linear-gradient(145deg, #6366f1, #8b5cf6);
-      border: none;
-      border-radius: 32px;
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: 'Cairo', sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin: 32px 0 24px;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.3);
-    }
+        .tree .branches {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            transform: translateX(-50%);
+        }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.4);
-    }
+        .tree .branches::before,
+        .tree .branches::after {
+            content: '';
+            position: absolute;
+            background: #2e7d32;
+            border-radius: 50%;
+        }
 
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+        .tree .branches::before {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            left: -40px;
+        }
 
-    .footer-links {
-      text-align: center;
-      color: #6b7280;
-      font-size: 15px;
-      font-weight: 500;
-    }
+        .tree .branches::after {
+            width: 100px;
+            height: 100px;
+            top: -10px;
+            right: -30px;
+        }
 
-    .footer-links a {
-      color: #6366f1;
-      text-decoration: none;
-      font-weight: 700;
-      margin-right: 8px;
-    }
+        .plant {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            height: 80px;
+        }
 
-    .footer-links a:hover {
-      color: #4f46e5;
-    }
+        .plant-1 { right: 20px; }
+        .plant-2 { right: 100px; bottom: -10px; width: 50px; }
+        .plant-3 { left: 80px; bottom: 20px; width: 70px; }
 
-    .password-strength {
-      margin-top: 8px;
-      height: 4px;
-      border-radius: 4px;
-      background: #e5e7eb;
-      overflow: hidden;
-    }
+        .plant .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 40px;
+            background: #5d4037;
+            transform: translateX(-50%);
+        }
 
-    .strength-bar {
-      height: 100%;
-      width: 0%;
-      transition: width 0.3s, background 0.3s;
-      border-radius: 4px;
-    }
+        .plant .leaf {
+            position: absolute;
+            background: #388e3c;
+            border-radius: 50% 0 50% 0;
+            transform: rotate(45deg);
+        }
 
-    .strength-text {
-      font-size: 11px;
-      margin-top: 6px;
-      text-align: left;
-      color: #9ca3af;
-      font-weight: 500;
-    }
+        .floating-leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #66bb6a;
+            border-radius: 0 50% 0 50%;
+            transform: rotate(45deg);
+            opacity: 0.3;
+            animation: leafFloat 15s infinite linear;
+        }
 
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: white;
-      backdrop-filter: blur(16px);
-      padding: 14px 28px;
-      border-radius: 60px;
-      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
-      font-weight: 600;
-      z-index: 1000;
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      font-size: 14px;
-    }
+        @keyframes leafFloat {
+            0% { transform: rotate(45deg) translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: rotate(135deg) translateY(-100px) translateX(50px); opacity: 0.6; }
+            100% { transform: rotate(225deg) translateY(-200px) translateX(100px); opacity: 0; }
+        }
 
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
+        .mobile-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            margin: 2rem 1.5rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
 
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-    }
+        .mobile-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+        .mobile-logo svg {
+            width: 38px;
+            height: 38px;
+            color: white;
+        }
 
-    @media (max-width: 550px) {
-      .pure-card { padding: 32px 24px; }
-      .header h1 { font-size: 28px; }
-    }
-  </style>
+        .mobile-card h2 {
+            font-size: 1.6rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-card .subtitle {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========================================
+           العناصر المشتركة (الحقول)
+           ======================================== */
+        .input-group {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2.8rem;
+            font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-group input:focus {
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-group label {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            background: transparent;
+            padding: 0 0.25rem;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label {
+            top: 0;
+            transform: translateY(-50%) scale(0.85);
+            background: white;
+            color: #6366f1;
+            right: 0.8rem;
+        }
+
+        .input-group input::placeholder {
+            color: transparent;
+        }
+
+        .input-group .icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+
+        .input-group input:focus ~ .icon {
+            color: #6366f1;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            height: 4px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .strength-text {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            text-align: left;
+            color: #94a3b8;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .footer-links a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            z-index: 1000;
+            transition: bottom 0.3s;
+        }
+
+        .toast.show {
+            bottom: 30px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-layout { display: none; }
+            .mobile-layout { display: flex; align-items: center; justify-content: center; }
+        }
+
+        @media (min-width: 769px) {
+            .desktop-layout { display: flex; }
+            .mobile-layout { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-
-  <div class="container">
-    <div class="pure-card">
-      <div class="header">
-        <div class="icon-wrapper">
-          <i class="fas fa-star-of-life"></i>
-        </div>
-        <h1>ابدأ رحلتك</h1>
-        <p>انضم إلى مجتمعنا المميز اليوم</p>
-      </div>
-
-      <form id="registerForm">
-        <div class="field">
-          <input type="text" id="username" class="field-input" placeholder=" " autocomplete="off">
-          <label class="field-label">اسم المستخدم</label>
-          <i class="fas fa-user field-icon"></i>
+    <!-- ========================================
+         تصميم الكمبيوتر - Rento Style
+    ======================================== -->
+    <div class="desktop-layout">
+        <div class="hero-section">
+            <div class="bg-circle-1"></div>
+            <div class="bg-circle-2"></div>
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h1>Rento</h1>
+                <p>منصة متكاملة لإدارة أعمالك<br>بكل سهولة واحترافية</p>
+            </div>
         </div>
 
-        <div class="field">
-          <input type="email" id="email" class="field-input" placeholder=" " autocomplete="off">
-          <label class="field-label">البريد الإلكتروني</label>
-          <i class="fas fa-envelope field-icon"></i>
-        </div>
+        <div class="form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>إنشاء حساب جديد</h2>
+                    <p>انضم إلى مجتمعنا المميز اليوم</p>
+                </div>
 
-        <div class="field">
-          <input type="password" id="password" class="field-input" placeholder=" ">
-          <label class="field-label">كلمة المرور</label>
-          <i class="fas fa-lock field-icon" id="togglePassword" style="cursor: pointer;"></i>
-        </div>
-        <div class="password-strength">
-          <div class="strength-bar" id="strengthBar"></div>
-        </div>
-        <div class="strength-text" id="strengthText">أدخل كلمة مرور قوية</div>
+                <form id="signupForm">
+                    <div class="input-group">
+                        <input type="text" id="username" placeholder=" " required>
+                        <label>اسم المستخدم</label>
+                        <i class="fas fa-user icon"></i>
+                    </div>
 
-        <div class="field">
-          <input type="password" id="confirmPwd" class="field-input" placeholder=" ">
-          <label class="field-label">تأكيد كلمة المرور</label>
-          <i class="fas fa-check-circle field-icon" id="toggleConfirmPwd" style="cursor: pointer;"></i>
-        </div>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder=" " required>
+                        <label>البريد الإلكتروني</label>
+                        <i class="fas fa-envelope icon"></i>
+                    </div>
 
-        <button type="submit" class="btn-primary" id="submitBtn">
-          <span>إنشاء حساب</span>
-          <i class="fas fa-arrow-left"></i>
-        </button>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder=" " required>
+                        <label>كلمة المرور</label>
+                        <i class="fas fa-lock icon" id="togglePassword" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">أدخل كلمة مرور قوية</div>
 
-        <div class="footer-links">
-          لديك حساب بالفعل؟
-          <a href="#" id="loginRedirect">تسجيل الدخول</a>
+                    <div class="input-group">
+                        <input type="password" id="confirmPwd" placeholder=" " required>
+                        <label>تأكيد كلمة المرور</label>
+                        <i class="fas fa-check-circle icon" id="toggleConfirmPwd" style="cursor: pointer;"></i>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span>إنشاء حساب</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+
+                    <div class="footer-links">
+                        لديك حساب بالفعل؟
+                        <a href="#" id="loginRedirect">تسجيل الدخول</a>
+                    </div>
+                </form>
+            </div>
         </div>
-      </form>
     </div>
-  </div>
 
-  <div class="toast" id="toastMsg"></div>
+    <!-- ========================================
+         تصميم الهاتف - Plantland Style
+    ======================================== -->
+    <div class="mobile-layout">
+        <div class="mobile-bg">
+            <div class="tree">
+                <div class="trunk"></div>
+                <div class="branches"></div>
+            </div>
+            <div class="plant plant-1"><div class="stem"></div><div class="leaf" style="top:-15px; left:-10px; width:25px; height:25px;"></div></div>
+            <div class="plant plant-2"><div class="stem"></div><div class="leaf" style="top:-10px; left:-5px; width:20px; height:20px;"></div></div>
+            <div class="plant plant-3"><div class="stem" style="height:50px;"></div><div class="leaf" style="top:-20px; left:-12px; width:28px; height:28px;"></div></div>
+            <div class="floating-leaf" style="top:20%; left:10%; animation-delay:0s;"></div>
+            <div class="floating-leaf" style="top:40%; right:5%; animation-delay:3s; width:15px; height:15px;"></div>
+            <div class="floating-leaf" style="top:60%; left:15%; animation-delay:6s; width:12px; height:12px;"></div>
+        </div>
 
-  <script>
-    // ==========================================
-    // 🔑 Firebase Configuration (نفس بيانات login.html)
-    // ==========================================
-    const firebaseConfig = {
-      apiKey: "AIzaSyB3YATU4fGBL9H_gOzbuMd7b0yk5k9UQlA",
-      authDomain: "loginapp-ed6db.firebaseapp.com",
-      projectId: "loginapp-ed6db",
-      storageBucket: "loginapp-ed6db.firebasestorage.app",
-      messagingSenderId: "419177945463",
-      appId: "1:419177945463:web:8dbac9ddbb8e60d47be972",
-      measurementId: "G-39RX24X1YT"
-    };
+        <div class="mobile-card">
+            <div class="mobile-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our community today</p>
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+            <form id="mobileSignupForm">
+                <div class="input-group">
+                    <input type="text" id="mobileUsername" placeholder=" " required>
+                    <label>Username</label>
+                    <i class="fas fa-user icon"></i>
+                </div>
 
-    // DOM elements
-    const form = document.getElementById('registerForm');
-    const usernameInput = document.getElementById('username');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const confirmInput = document.getElementById('confirmPwd');
-    const submitBtn = document.getElementById('submitBtn');
-    const strengthBar = document.getElementById('strengthBar');
-    const strengthText = document.getElementById('strengthText');
-    const toast = document.getElementById('toastMsg');
+                <div class="input-group">
+                    <input type="email" id="mobileEmail" placeholder=" " required>
+                    <label>Email Address</label>
+                    <i class="fas fa-envelope icon"></i>
+                </div>
 
-    function showToast(message, isError = false) {
-      toast.textContent = message;
-      toast.style.background = isError ? '#fff5f5' : '#f0fdf4';
-      toast.style.color = isError ? '#dc2626' : '#059669';
-      toast.style.border = isError ? '1px solid #fecaca' : '1px solid #bbf7d0';
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
+                <div class="input-group">
+                    <input type="password" id="mobilePassword" placeholder=" " required>
+                    <label>Password</label>
+                    <i class="fas fa-lock icon" id="mobileTogglePassword" style="cursor: pointer;"></i>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar" id="mobileStrengthBar"></div>
+                </div>
+                <div class="strength-text" id="mobileStrengthText">Enter a strong password</div>
 
-    // Password strength checker
-    function checkPasswordStrength(pwd) {
-      let strength = 0;
-      if (pwd.length >= 6) strength++;
-      if (pwd.length >= 10) strength++;
-      if (/[A-Z]/.test(pwd)) strength++;
-      if (/[0-9]/.test(pwd)) strength++;
-      if (/[^A-Za-z0-9]/.test(pwd)) strength++;
-      
-      const percentage = (strength / 5) * 100;
-      strengthBar.style.width = percentage + '%';
-      
-      if (pwd.length === 0) {
-        strengthBar.style.background = '#e5e7eb';
-        strengthText.textContent = 'أدخل كلمة مرور قوية';
-        strengthText.style.color = '#9ca3af';
-        return 0;
-      }
-      
-      if (strength <= 2) {
-        strengthBar.style.background = '#ef4444';
-        strengthText.textContent = 'ضعيفة';
-        strengthText.style.color = '#ef4444';
-      } else if (strength <= 3) {
-        strengthBar.style.background = '#f59e0b';
-        strengthText.textContent = 'متوسطة';
-        strengthText.style.color = '#f59e0b';
-      } else if (strength <= 4) {
-        strengthBar.style.background = '#10b981';
-        strengthText.textContent = 'جيدة';
-        strengthText.style.color = '#10b981';
-      } else {
-        strengthBar.style.background = '#059669';
-        strengthText.textContent = 'قوية جداً';
-        strengthText.style.color = '#059669';
-      }
-      return strength;
-    }
+                <div class="input-group">
+                    <input type="password" id="mobileConfirmPwd" placeholder=" " required>
+                    <label>Confirm Password</label>
+                    <i class="fas fa-check-circle icon" id="mobileToggleConfirmPwd" style="cursor: pointer;"></i>
+                </div>
 
-    // Toggle password visibility
-    const togglePassword = document.getElementById('togglePassword');
-    const toggleConfirm = document.getElementById('toggleConfirmPwd');
-    
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordInput.type = type;
-      togglePassword.classList.toggle('fa-lock');
-      togglePassword.classList.toggle('fa-unlock-alt');
-    });
-    
-    toggleConfirm.addEventListener('click', () => {
-      const type = confirmInput.type === 'password' ? 'text' : 'password';
-      confirmInput.type = type;
-      toggleConfirm.classList.toggle('fa-check-circle');
-      toggleConfirm.classList.toggle('fa-eye-slash');
-    });
+                <button type="submit" class="btn-primary" id="mobileSubmitBtn">
+                    <span>Sign Up</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
 
-    passwordInput.addEventListener('input', (e) => {
-      checkPasswordStrength(e.target.value);
-    });
+                <div class="footer-links">
+                    Already have an account?
+                    <a href="#" id="mobileLoginRedirect">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    function validateEmail(email) {
-      const re = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
-      return re.test(email);
-    }
+    <div class="toast" id="toastMsg"></div>
 
-    // Create account with Firebase
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const username = usernameInput.value.trim();
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-      const confirm = confirmInput.value;
-      
-      if (!username || !email || !password || !confirm) {
-        showToast('❌ يرجى ملء جميع الحقول', true);
-        return;
-      }
-      
-      if (username.length < 3) {
-        showToast('👤 اسم المستخدم يجب أن يكون 3 أحرف على الأقل', true);
-        return;
-      }
-      
-      if (!validateEmail(email)) {
-        showToast('📧 البريد الإلكتروني غير صالح', true);
-        return;
-      }
-      
-      if (password.length < 6) {
-        showToast('🔒 كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
-        return;
-      }
-      
-      if (password !== confirm) {
-        showToast('❌ كلمة المرور غير متطابقة', true);
-        return;
-      }
-      
-      // Disable button and show loading
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<div class="loading-spinner"></div> جاري إنشاء الحساب...';
-      
-      try {
-        // Create user with Firebase
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        
-        // Update profile with username
-        await user.updateProfile({
-          displayName: username
-        });
-        
-        showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح`, false);
-        
-        // Redirect to login page after 1.5 seconds
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 1500);
-        
-      } catch (error) {
-        let errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
-        if (error.code === 'auth/email-already-in-use') {
-          errorMessage = '⚠️ البريد الإلكتروني مسجل مسبقاً';
-        } else if (error.code === 'auth/invalid-email') {
-          errorMessage = '📧 البريد الإلكتروني غير صالح';
-        } else if (error.code === 'auth/weak-password') {
-          errorMessage = '🔒 كلمة المرور ضعيفة جداً';
+    <script>
+        // ==========================================
+        // 🔑 Firebase Configuration
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3YATU4fGBL9H_gOzbuMd7b0yk5k9UQlA",
+            authDomain: "loginapp-ed6db.firebaseapp.com",
+            projectId: "loginapp-ed6db",
+            storageBucket: "loginapp-ed6db.firebasestorage.app",
+            messagingSenderId: "419177945463",
+            appId: "1:419177945463:web:8dbac9ddbb8e60d47be972",
+            measurementId: "G-39RX24X1YT"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Toast function
+        const toast = document.getElementById('toastMsg');
+        let toastTimeout;
+
+        function showToast(message, isError = false) {
+            clearTimeout(toastTimeout);
+            toast.textContent = message;
+            toast.style.background = isError ? '#ef4444' : '#10b981';
+            toast.style.color = 'white';
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
-        showToast(errorMessage, true);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>إنشاء حساب</span><i class="fas fa-arrow-left"></i>';
-      }
-    });
-    
-    // Login redirect
-    document.getElementById('loginRedirect').addEventListener('click', (e) => {
-      e.preventDefault();
-      window.location.href = 'login.html';
-    });
-    
-    // Animate inputs
-    const allInputs = document.querySelectorAll('.field-input');
-    allInputs.forEach(input => {
-      input.addEventListener('focus', () => {
-        input.parentElement.style.transform = 'translateX(-2px)';
-      });
-      input.addEventListener('blur', () => {
-        input.parentElement.style.transform = 'translateX(0)';
-      });
-    });
-  </script>
+
+        // Password strength checker
+        function checkPasswordStrength(pwd, strengthBar, strengthText, isDesktop = true) {
+            let strength = 0;
+            if (pwd.length >= 6) strength++;
+            if (pwd.length >= 10) strength++;
+            if (/[A-Z]/.test(pwd)) strength++;
+            if (/[0-9]/.test(pwd)) strength++;
+            if (/[^A-Za-z0-9]/.test(pwd)) strength++;
+            
+            const percentage = (strength / 5) * 100;
+            strengthBar.style.width = percentage + '%';
+            
+            if (pwd.length === 0) {
+                strengthBar.style.background = '#e2e8f0';
+                strengthText.textContent = isDesktop ? 'أدخل كلمة مرور قوية' : 'Enter a strong password';
+                strengthText.style.color = '#94a3b8';
+                return 0;
+            }
+            
+            if (strength <= 2) {
+                strengthBar.style.background = '#ef4444';
+                strengthText.textContent = isDesktop ? 'ضعيفة' : 'Weak';
+                strengthText.style.color = '#ef4444';
+            } else if (strength <= 3) {
+                strengthBar.style.background = '#f59e0b';
+                strengthText.textContent = isDesktop ? 'متوسطة' : 'Medium';
+                strengthText.style.color = '#f59e0b';
+            } else if (strength <= 4) {
+                strengthBar.style.background = '#10b981';
+                strengthText.textContent = isDesktop ? 'جيدة' : 'Good';
+                strengthText.style.color = '#10b981';
+            } else {
+                strengthBar.style.background = '#059669';
+                strengthText.textContent = isDesktop ? 'قوية جداً' : 'Strong';
+                strengthText.style.color = '#059669';
+            }
+            return strength;
+        }
+
+        // Toggle password visibility
+        function setupTogglePassword(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById(toggleId);
+            if (input && toggle) {
+                toggle.addEventListener('click', () => {
+                    const type = input.type === 'password' ? 'text' : 'password';
+                    input.type = type;
+                    toggle.classList.toggle('fa-lock');
+                    toggle.classList.toggle('fa-unlock-alt');
+                });
+            }
+        }
+
+        // Desktop signup
+        const desktopForm = document.getElementById('signupForm');
+        const desktopUsername = document.getElementById('username');
+        const desktopEmail = document.getElementById('email');
+        const desktopPassword = document.getElementById('password');
+        const desktopConfirm = document.getElementById('confirmPwd');
+        const desktopSubmitBtn = document.getElementById('submitBtn');
+        const desktopStrengthBar = document.getElementById('strengthBar');
+        const desktopStrengthText = document.getElementById('strengthText');
+
+        setupTogglePassword('password', 'togglePassword');
+        setupTogglePassword('confirmPwd', 'toggleConfirmPwd');
+
+        desktopPassword.addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value, desktopStrengthBar, desktopStrengthText, true);
+        });
+
+        async function handleSignup(email, password, confirm, username, isDesktop = true) {
+            if (!username || !email || !password || !confirm) {
+                showToast(isDesktop ? '❌ يرجى ملء جميع الحقول' : '❌ Please fill all fields', true);
+                return false;
+            }
+            
+            if (username.length < 3) {
+                showToast(isDesktop ? '👤 اسم المستخدم يجب أن يكون 3 أحرف على الأقل' : '👤 Username must be at least 3 characters', true);
+                return false;
+            }
+            
+            if (!email.includes('@')) {
+                showToast(isDesktop ? '📧 البريد الإلكتروني غير صالح' : '📧 Invalid email address', true);
+                return false;
+            }
+            
+            if (password.length < 6) {
+                showToast(isDesktop ? '🔒 كلمة المرور يجب أن تكون 6 أحرف على الأقل' : '🔒 Password must be at least 6 characters', true);
+                return false;
+            }
+            
+            if (password !== confirm) {
+                showToast(isDesktop ? '❌ كلمة المرور غير متطابقة' : '❌ Passwords do not match', true);
+                return false;
+            }
+            
+            return true;
+        }
+
+        desktopForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = desktopUsername.value.trim();
+            const email = desktopEmail.value.trim();
+            const password = desktopPassword.value;
+            const confirm = desktopConfirm.value;
+            
+            const isValid = await handleSignup(email, password, confirm, username, true);
+            if (!isValid) return;
+            
+            desktopSubmitBtn.disabled = true;
+            desktopSubmitBtn.innerHTML = '<div class="loading-spinner"></div> جاري إنشاء الحساب...';
+            
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({ displayName: username });
+                showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح`, false);
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } catch (error) {
+                let errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = '⚠️ البريد الإلكتروني مسجل مسبقاً';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = '📧 البريد الإلكتروني غير صالح';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = '🔒 كلمة المرور ضعيفة جداً';
+                }
+                showToast(errorMessage, true);
+            } finally {
+                desktopSubmitBtn.disabled = false;
+                desktopSubmitBtn.innerHTML = '<span>إنشاء حساب</span><i class="fas fa-arrow-left"></i>';
+            }
+        });
+
+        // Mobile signup
+        const mobileForm = document.getElementById('mobileSignupForm');
+        const mobileUsername = document.getElementById('mobileUsername');
+        const mobileEmail = document.getElementById('mobileEmail');
+        const mobilePassword = document.getElementById('mobilePassword');
+        const mobileConfirm = document.getElementById('mobileConfirmPwd');
+        const mobileSubmitBtn = document.getElementById('mobileSubmitBtn');
+        const mobileStrengthBar = document.getElementById('mobileStrengthBar');
+        const mobileStrengthText = document.getElementById('mobileStrengthText');
+
+        setupTogglePassword('mobilePassword', 'mobileTogglePassword');
+        setupTogglePassword('mobileConfirmPwd', 'mobileToggleConfirmPwd');
+
+        mobilePassword.addEventListener('input', (e) => {
+            checkPasswordStrength(e.target.value, mobileStrengthBar, mobileStrengthText, false);
+        });
+
+        mobileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = mobileUsername.value.trim();
+            const email = mobileEmail.value.trim();
+            const password = mobilePassword.value;
+            const confirm = mobileConfirm.value;
+            
+            const isValid = await handleSignup(email, password, confirm, username, false);
+            if (!isValid) return;
+            
+            mobileSubmitBtn.disabled = true;
+            mobileSubmitBtn.innerHTML = '<div class="loading-spinner"></div> Creating account...';
+            
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({ displayName: username });
+                showToast(`✨ Welcome ${username}! Account created successfully`, false);
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } catch (error) {
+                let errorMessage = 'Error creating account';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = '⚠️ Email already registered';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = '📧 Invalid email address';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = '🔒 Password is too weak';
+                }
+                showToast(errorMessage, true);
+            } finally {
+                mobileSubmitBtn.disabled = false;
+                mobileSubmitBtn.innerHTML = '<span>Sign Up</span><i class="fas fa-arrow-left"></i>';
+            }
+        });
+
+        // Redirect to login
+        document.getElementById('loginRedirect')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+        document.getElementById('mobileLoginRedirect')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'login.html';
+        });
+    </script>
 </body>
 </html>

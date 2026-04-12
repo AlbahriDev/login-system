@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>تسجيل الدخول </title>
+    <title>تسجيل الدخول | Rento</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Firebase SDKs -->
@@ -23,7 +23,7 @@
         }
 
         /* ========================================
-           تصميم الكمبيوتر - مستوحى من Rento
+           تصميم الكمبيوتر
            ======================================== */
         .desktop-layout {
             display: flex;
@@ -31,9 +31,10 @@
             width: 100%;
         }
 
+        /* القسم الأيمن - خلفية إنشاء حساب (بدل الزرقاء) */
         .hero-section {
             flex: 1;
-            background: linear-gradient(145deg, #0a0a2a 0%, #0f0f3a 50%, #1a1a4e 100%);
+            background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -43,11 +44,12 @@
             padding: 3rem;
         }
 
+        /* أشكال زخرفية في الخلفية */
         .hero-section .bg-circle-1 {
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
             top: -100px;
             right: -100px;
             border-radius: 50%;
@@ -58,11 +60,22 @@
             position: absolute;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
             bottom: -50px;
             left: -80px;
             border-radius: 50%;
             animation: float2 10s ease-in-out infinite reverse;
+        }
+
+        .hero-section .bg-circle-3 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
+            top: 40%;
+            left: 20%;
+            border-radius: 50%;
+            animation: float3 14s ease-in-out infinite;
         }
 
         @keyframes float1 {
@@ -73,6 +86,11 @@
         @keyframes float2 {
             0%, 100% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(-40px, 20px) scale(1.2); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 40px) rotate(180deg); }
         }
 
         .hero-content {
@@ -86,13 +104,13 @@
         .hero-logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 2rem;
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
         }
 
         .hero-logo svg {
@@ -101,18 +119,73 @@
             color: white;
         }
 
-        .hero-content h1 {
-            font-size: 2.8rem;
+        /* نصوص القسم الأيمن - خاصة بإنشاء حساب */
+        .hero-content .create-title {
+            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #c4b5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .hero-content p {
+        .hero-content .create-subtitle {
             font-size: 1rem;
             opacity: 0.8;
+            margin-bottom: 1.5rem;
             line-height: 1.8;
         }
 
+        .hero-content .features-list {
+            text-align: right;
+            margin: 2rem 0;
+            padding-right: 1.5rem;
+        }
+
+        .hero-content .features-list li {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-content .features-list li svg {
+            width: 20px;
+            height: 20px;
+            color: #8b5cf6;
+        }
+
+        /* زر إنشاء حساب في القسم الأيمن */
+        .hero-signup-btn {
+            margin-top: 2rem;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border: none;
+            border-radius: 2rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .hero-signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* القسم الأيسر - نموذج تسجيل الدخول */
         .form-section {
             flex: 1;
             display: flex;
@@ -144,12 +217,12 @@
         }
 
         /* ========================================
-           تصميم الهاتف - مستوحى من Plantland
+           تصميم الهاتف
            ======================================== */
         .mobile-layout {
             display: none;
             min-height: 100vh;
-            background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+            background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
             position: relative;
             overflow: hidden;
         }
@@ -163,102 +236,6 @@
             z-index: 0;
         }
 
-        .tree {
-            position: absolute;
-            bottom: 0;
-            left: -50px;
-            width: 300px;
-            height: 400px;
-            opacity: 0.2;
-        }
-
-        .tree .trunk {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 30px;
-            height: 150px;
-            background: #5d4037;
-            border-radius: 10px;
-            transform: translateX(-50%);
-        }
-
-        .tree .branches {
-            position: absolute;
-            bottom: 120px;
-            left: 50%;
-            width: 120px;
-            height: 120px;
-            transform: translateX(-50%);
-        }
-
-        .tree .branches::before,
-        .tree .branches::after {
-            content: '';
-            position: absolute;
-            background: #2e7d32;
-            border-radius: 50%;
-        }
-
-        .tree .branches::before {
-            width: 80px;
-            height: 80px;
-            top: 20px;
-            left: -40px;
-        }
-
-        .tree .branches::after {
-            width: 100px;
-            height: 100px;
-            top: -10px;
-            right: -30px;
-        }
-
-        .plant {
-            position: absolute;
-            bottom: 0;
-            width: 60px;
-            height: 80px;
-        }
-
-        .plant-1 { right: 20px; }
-        .plant-2 { right: 100px; bottom: -10px; width: 50px; }
-        .plant-3 { left: 80px; bottom: 20px; width: 70px; }
-
-        .plant .stem {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            height: 40px;
-            background: #5d4037;
-            transform: translateX(-50%);
-        }
-
-        .plant .leaf {
-            position: absolute;
-            background: #388e3c;
-            border-radius: 50% 0 50% 0;
-            transform: rotate(45deg);
-        }
-
-        .floating-leaf {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #66bb6a;
-            border-radius: 0 50% 0 50%;
-            transform: rotate(45deg);
-            opacity: 0.3;
-            animation: leafFloat 15s infinite linear;
-        }
-
-        @keyframes leafFloat {
-            0% { transform: rotate(45deg) translateY(0) translateX(0); opacity: 0.3; }
-            50% { transform: rotate(135deg) translateY(-100px) translateX(50px); opacity: 0.6; }
-            100% { transform: rotate(225deg) translateY(-200px) translateX(100px); opacity: 0; }
-        }
-
         .mobile-card {
             position: relative;
             z-index: 10;
@@ -267,15 +244,15 @@
             border-radius: 2rem;
             margin: 2rem 1.5rem;
             padding: 2rem 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             text-align: center;
         }
 
         .mobile-logo {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #2e7d32, #43a047);
-            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -300,9 +277,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* ========================================
-           تصميم الحقول مع labels
-           ======================================== */
+        /* تصميم الحقول */
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
@@ -321,12 +296,11 @@
         }
 
         .input-group input:focus {
-            border-color: #6366f1;
+            border-color: #8b5cf6;
             background: white;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
 
-        /* تسميات الحقول - Floating Labels */
         .input-group label {
             position: absolute;
             right: 1rem;
@@ -346,7 +320,7 @@
             top: 0;
             transform: translateY(-50%) scale(0.85);
             background: white;
-            color: #6366f1;
+            color: #8b5cf6;
             right: 0.8rem;
         }
 
@@ -360,10 +334,9 @@
         }
 
         .input-group input:focus ~ .icon {
-            color: #6366f1;
+            color: #8b5cf6;
         }
 
-        /* جعل placeholder شفافاً */
         .input-group input::placeholder {
             color: transparent;
         }
@@ -387,11 +360,11 @@
         .remember input {
             width: 1rem;
             height: 1rem;
-            accent-color: #6366f1;
+            accent-color: #8b5cf6;
         }
 
         .forgot {
-            color: #6366f1;
+            color: #8b5cf6;
             text-decoration: none;
             font-weight: 600;
         }
@@ -399,7 +372,7 @@
         .login-btn {
             width: 100%;
             padding: 0.9rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
             border: none;
             border-radius: 1rem;
             color: white;
@@ -416,7 +389,7 @@
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
         }
 
         .divider {
@@ -466,19 +439,6 @@
         .social-btn svg {
             width: 20px;
             height: 20px;
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #64748b;
-            font-size: 0.85rem;
-        }
-
-        .signup-link a {
-            color: #6366f1;
-            text-decoration: none;
-            font-weight: 700;
         }
 
         /* شاشة الترحيب */
@@ -578,22 +538,57 @@
 </head>
 <body>
 
-    <!-- تصميم الكمبيوتر - Rento Style -->
+    <!-- تصميم الكمبيوتر -->
     <div class="desktop-layout">
+        <!-- القسم الأيمن - خلفية إنشاء حساب (تم تعديلها) -->
         <div class="hero-section">
             <div class="bg-circle-1"></div>
             <div class="bg-circle-2"></div>
+            <div class="bg-circle-3"></div>
             <div class="hero-content">
                 <div class="hero-logo">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                     </svg>
                 </div>
-                <h1>Rento</h1>
-                <p>منصة متكاملة لإدارة أعمالك<br>بكل سهولة واحترافية</p>
+                <div class="create-title">إنشاء حساب جديد</div>
+                <div class="create-subtitle">انضم إلى منصة Rento واستمتع بخدماتنا المتكاملة</div>
+                
+                <ul class="features-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        <span>إدارة أعمالك بكل سهولة</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        <span>تقارير وتحليلات متقدمة</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        <span>دعم فني على مدار الساعة</span>
+                    </li>
+                </ul>
+
+                <!-- زر إنشاء حساب - عند النقر يحول إلى صفحة إنشاء الحساب -->
+                <button class="hero-signup-btn" id="heroSignupBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <line x1="20" y1="8" x2="20" y2="14"/>
+                        <line x1="17" y1="11" x2="23" y2="11"/>
+                    </svg>
+                    <span>إنشاء حساب جديد</span>
+                </button>
             </div>
         </div>
 
+        <!-- القسم الأيسر - نموذج تسجيل الدخول (كما هو بدون تغيير) -->
         <div class="form-section">
             <div class="form-container">
                 <div class="form-header">
@@ -653,42 +648,26 @@
                         </svg>
                     </button>
                 </div>
-
-                <div class="signup-link">
-                    ليس لديك حساب؟ <a href="signup.html">إنشاء حساب جديد</a>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- تصميم الهاتف - Plantland Style -->
+    <!-- تصميم الهاتف -->
     <div class="mobile-layout">
-        <div class="mobile-bg">
-            <div class="tree">
-                <div class="trunk"></div>
-                <div class="branches"></div>
-            </div>
-            <div class="plant plant-1"><div class="stem"></div><div class="leaf" style="top:-15px; left:-10px; width:25px; height:25px;"></div></div>
-            <div class="plant plant-2"><div class="stem"></div><div class="leaf" style="top:-10px; left:-5px; width:20px; height:20px;"></div></div>
-            <div class="plant plant-3"><div class="stem" style="height:50px;"></div><div class="leaf" style="top:-20px; left:-12px; width:28px; height:28px;"></div></div>
-            <div class="floating-leaf" style="top:20%; left:10%; animation-delay:0s;"></div>
-            <div class="floating-leaf" style="top:40%; right:5%; animation-delay:3s; width:15px; height:15px;"></div>
-            <div class="floating-leaf" style="top:60%; left:15%; animation-delay:6s; width:12px; height:12px;"></div>
-        </div>
-
+        <div class="mobile-bg"></div>
         <div class="mobile-card">
             <div class="mobile-logo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h2>Hello!</h2>
-            <p class="subtitle">Welcome to Plantland</p>
+            <h2>مرحباً بك</h2>
+            <p class="subtitle">سجل دخولك للمتابعة إلى حسابك</p>
 
             <form id="mobileLoginForm">
                 <div class="input-group">
                     <input type="email" id="mobileEmail" placeholder=" " required>
-                    <label>Email Address</label>
+                    <label>البريد الإلكتروني</label>
                     <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                         <polyline points="22,6 12,13 2,6"/>
@@ -697,7 +676,7 @@
 
                 <div class="input-group">
                     <input type="password" id="mobilePassword" placeholder=" " required>
-                    <label>Password</label>
+                    <label>كلمة المرور</label>
                     <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -705,19 +684,19 @@
                 </div>
 
                 <div class="options">
-                    <label class="remember"><input type="checkbox" id="mobileRememberCheck"><span>Remember me</span></label>
-                    <a href="#" class="forgot" id="mobileForgotPassword">Forgot Password</a>
+                    <label class="remember"><input type="checkbox" id="mobileRememberCheck"><span>تذكر بياناتي</span></label>
+                    <a href="#" class="forgot" id="mobileForgotPassword">نسيت كلمة المرور؟</a>
                 </div>
 
                 <button type="submit" class="login-btn" id="mobileLoginBtn">
-                    <span>Sign In</span>
+                    <span>تسجيل الدخول</span>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </button>
             </form>
 
-            <div class="divider"><span>Or</span></div>
+            <div class="divider"><span>أو</span></div>
 
             <div class="social-buttons">
                 <button class="social-btn" id="mobileGoogleBtn">
@@ -735,7 +714,11 @@
                 </button>
             </div>
 
-            <div class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></div>
+            <div style="margin-top: 1.5rem;">
+                <button class="hero-signup-btn" id="mobileHeroSignupBtn" style="width: 100%; background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                    <span>إنشاء حساب جديد</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -749,7 +732,7 @@
             </div>
             <h1 id="welcomeName">مرحباً</h1>
             <p id="welcomeMessage">تم تسجيل دخولك بنجاح</p>
-            <p id="userEmailDisplay" style="color: #6366f1; margin-bottom: 1rem;"></p>
+            <p id="userEmailDisplay" style="color: #8b5cf6; margin-bottom: 1rem;"></p>
             <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
         </div>
     </div>
@@ -778,6 +761,18 @@
         const welcomeMessage = document.getElementById('welcomeMessage');
         const userEmailDisplay = document.getElementById('userEmailDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
+
+        // أزرار إنشاء حساب - تحويل إلى صفحة signup.html
+        const heroSignupBtn = document.getElementById('heroSignupBtn');
+        const mobileHeroSignupBtn = document.getElementById('mobileHeroSignupBtn');
+
+        heroSignupBtn?.addEventListener('click', () => {
+            window.location.href = 'signup.html';
+        });
+
+        mobileHeroSignupBtn?.addEventListener('click', () => {
+            window.location.href = 'signup.html';
+        });
 
         let toastTimeout;
 
@@ -879,16 +874,16 @@
             const password = mobilePassword.value.trim();
 
             if (!email.includes('@')) {
-                showToast('Please enter a valid email', true);
+                showToast('الرجاء إدخال بريد إلكتروني صحيح', true);
                 return;
             }
             if (password.length < 6) {
-                showToast('Password must be at least 6 characters', true);
+                showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
                 return;
             }
 
             mobileLoginBtn.disabled = true;
-            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> Signing in...';
+            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> جاري الدخول...';
 
             try {
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
@@ -896,18 +891,18 @@
                     localStorage.setItem('rememberedEmail', email);
                 }
                 showWelcomeScreen(userCredential.user);
-                showToast('Login successful!');
+                showToast('تم تسجيل الدخول بنجاح!');
             } catch (error) {
                 if (error.code === 'auth/user-not-found') {
-                    showToast('No account found with this email', true);
+                    showToast('لا يوجد حساب بهذا البريد', true);
                 } else if (error.code === 'auth/wrong-password') {
-                    showToast('Incorrect password', true);
+                    showToast('كلمة المرور غير صحيحة', true);
                 } else {
                     showToast(error.message, true);
                 }
             } finally {
                 mobileLoginBtn.disabled = false;
-                mobileLoginBtn.innerHTML = '<span>Sign In</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                mobileLoginBtn.innerHTML = '<span>تسجيل الدخول</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
             }
         });
 
