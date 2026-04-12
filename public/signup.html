@@ -143,334 +143,357 @@
             color: #64748b;
             font-size: 0.9rem;
         }
+/* ========================================
+   متغيرات الألوان (لتسهيل التعديل لاحقاً)
+   ======================================== */
+:root {
+    --bg-gradient-start: #e8f5e9;
+    --bg-gradient-mid: #c8e6c9;
+    --bg-gradient-end: #a5d6a7;
+    
+    --tree-trunk: #5d4037;
+    --tree-leaves: #2e7d32;
+    --plant-leaf: #388e3c;
+    --floating-leaf: #66bb6a;
+    
+    --primary-btn-start: #6366f1;
+    --primary-btn-end: #8b5cf6;
+    
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    
+    --input-bg: #f8fafc;
+    --input-border: #e2e8f0;
+}
 
-        /* ========================================
-           تصميم الهاتف - Plantland Style (نباتات)
-           ======================================== */
-        .mobile-layout {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
-            position: relative;
-            overflow: hidden;
-        }
+/* ========================================
+   تصميم الهاتف - Plantland Style (نباتات)
+   ======================================== */
+.mobile-layout {
+    display: none;
+    min-height: 100vh;
+    background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+    position: relative;
+    overflow: hidden;
+}
 
-        .mobile-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            bottom: 0;
-            left: 0;
-            z-index: 0;
-        }
+.mobile-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
 
-        .tree {
-            position: absolute;
-            bottom: 0;
-            left: -50px;
-            width: 300px;
-            height: 400px;
-            opacity: 0.2;
-        }
+.tree {
+    position: absolute;
+    bottom: 0;
+    left: -50px;
+    width: 300px;
+    height: 400px;
+    opacity: 0.2;
+}
 
-        .tree .trunk {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 30px;
-            height: 150px;
-            background: #5d4037;
-            border-radius: 10px;
-            transform: translateX(-50%);
-        }
+.tree .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 30px;
+    height: 150px;
+    background: var(--tree-trunk);
+    border-radius: 10px;
+    transform: translateX(-50%);
+}
 
-        .tree .branches {
-            position: absolute;
-            bottom: 120px;
-            left: 50%;
-            width: 120px;
-            height: 120px;
-            transform: translateX(-50%);
-        }
+.tree .branches {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    transform: translateX(-50%);
+}
 
-        .tree .branches::before,
-        .tree .branches::after {
-            content: '';
-            position: absolute;
-            background: #2e7d32;
-            border-radius: 50%;
-        }
+.tree .branches::before,
+.tree .branches::after {
+    content: '';
+    position: absolute;
+    background: var(--tree-leaves);
+    border-radius: 50%;
+}
 
-        .tree .branches::before {
-            width: 80px;
-            height: 80px;
-            top: 20px;
-            left: -40px;
-        }
+.tree .branches::before {
+    width: 80px;
+    height: 80px;
+    top: 20px;
+    left: -40px;
+}
 
-        .tree .branches::after {
-            width: 100px;
-            height: 100px;
-            top: -10px;
-            right: -30px;
-        }
+.tree .branches::after {
+    width: 100px;
+    height: 100px;
+    top: -10px;
+    right: -30px;
+}
 
-        .plant {
-            position: absolute;
-            bottom: 0;
-            width: 60px;
-            height: 80px;
-        }
+.plant {
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 80px;
+}
 
-        .plant-1 { right: 20px; }
-        .plant-2 { right: 100px; bottom: -10px; width: 50px; }
-        .plant-3 { left: 80px; bottom: 20px; width: 70px; }
+.plant-1 { right: 20px; }
+.plant-2 { right: 100px; bottom: -10px; width: 50px; }
+.plant-3 { left: 80px; bottom: 20px; width: 70px; }
 
-        .plant .stem {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            height: 40px;
-            background: #5d4037;
-            transform: translateX(-50%);
-        }
+.plant .stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    height: 40px;
+    background: var(--tree-trunk);
+    transform: translateX(-50%);
+}
 
-        .plant .leaf {
-            position: absolute;
-            background: #388e3c;
-            border-radius: 50% 0 50% 0;
-            transform: rotate(45deg);
-        }
+.plant .leaf {
+    position: absolute;
+    background: var(--plant-leaf);
+    border-radius: 50% 0 50% 0;
+    transform: rotate(45deg);
+}
 
-        .floating-leaf {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #66bb6a;
-            border-radius: 0 50% 0 50%;
-            transform: rotate(45deg);
-            opacity: 0.3;
-            animation: leafFloat 15s infinite linear;
-        }
+.floating-leaf {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--floating-leaf);
+    border-radius: 0 50% 0 50%;
+    transform: rotate(45deg);
+    opacity: 0.3;
+    animation: leafFloat 15s infinite linear;
+}
 
-        @keyframes leafFloat {
-            0% { transform: rotate(45deg) translateY(0) translateX(0); opacity: 0.3; }
-            50% { transform: rotate(135deg) translateY(-100px) translateX(50px); opacity: 0.6; }
-            100% { transform: rotate(225deg) translateY(-200px) translateX(100px); opacity: 0; }
-        }
+@keyframes leafFloat {
+    0% { transform: rotate(45deg) translateY(0) translateX(0); opacity: 0.3; }
+    50% { transform: rotate(135deg) translateY(-100px) translateX(50px); opacity: 0.6; }
+    100% { transform: rotate(225deg) translateY(-200px) translateX(100px); opacity: 0; }
+}
 
-        .mobile-card {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            margin: 2rem 1.5rem;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
+.mobile-card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-radius: 2rem;
+    margin: 2rem 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
 
-        .mobile-logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #2e7d32, #43a047);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
+.mobile-logo {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--tree-leaves), #43a047);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
 
-        .mobile-logo svg {
-            width: 38px;
-            height: 38px;
-            color: white;
-        }
+.mobile-logo svg {
+    width: 38px;
+    height: 38px;
+    color: white;
+}
 
-        .mobile-card h2 {
-            font-size: 1.6rem;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
+.mobile-card h2 {
+    font-size: 1.6rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
 
-        .mobile-card .subtitle {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
+.mobile-card .subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
 
-        /* ========================================
-           العناصر المشتركة (الحقول)
-           ======================================== */
-        .input-group {
-            position: relative;
-            margin-bottom: 1.25rem;
-        }
+/* ========================================
+   العناصر المشتركة (الحقول)
+   ======================================== */
+.input-group {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
 
-        .input-group input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 2.8rem;
-            font-size: 0.95rem;
-            font-family: 'Cairo', sans-serif;
-            border: 2px solid #e2e8f0;
-            border-radius: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
+.input-group input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 2.8rem;
+    font-size: 0.95rem;
+    font-family: 'Cairo', sans-serif;
+    border: 2px solid var(--input-border);
+    border-radius: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background: var(--input-bg);
+}
 
-        .input-group input:focus {
-            border-color: #6366f1;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
+.input-group input:focus {
+    border-color: var(--primary-btn-start);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
 
-        .input-group label {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-weight: 500;
-            font-size: 0.9rem;
-            pointer-events: none;
-            transition: all 0.2s ease;
-            background: transparent;
-            padding: 0 0.25rem;
-        }
+.input-group label {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background: transparent;
+    padding: 0 0.25rem;
+}
 
-        .input-group input:focus ~ label,
-        .input-group input:not(:placeholder-shown) ~ label {
-            top: 0;
-            transform: translateY(-50%) scale(0.85);
-            background: white;
-            color: #6366f1;
-            right: 0.8rem;
-        }
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    top: 0;
+    transform: translateY(-50%) scale(0.85);
+    background: white;
+    color: var(--primary-btn-start);
+    right: 0.8rem;
+}
 
-        .input-group input::placeholder {
-            color: transparent;
-        }
+.input-group input::placeholder {
+    color: transparent;
+}
 
-        .input-group .icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            transition: color 0.3s;
-        }
+.input-group .icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    transition: color 0.3s;
+}
 
-        .input-group input:focus ~ .icon {
-            color: #6366f1;
-        }
+.input-group input:focus ~ .icon {
+    color: var(--primary-btn-start);
+}
 
-        .password-strength {
-            margin-top: 5px;
-            height: 4px;
-            border-radius: 4px;
-            background: #e2e8f0;
-            overflow: hidden;
-        }
+.password-strength {
+    margin-top: 5px;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--input-border);
+    overflow: hidden;
+}
 
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s, background 0.3s;
-        }
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s, background 0.3s;
+}
 
-        .strength-text {
-            font-size: 0.7rem;
-            margin-top: 5px;
-            text-align: left;
-            color: #94a3b8;
-        }
+.strength-text {
+    font-size: 0.7rem;
+    margin-top: 5px;
+    text-align: left;
+    color: var(--text-light);
+}
 
-        .btn-primary {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 1rem;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Cairo', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
+.btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, var(--primary-btn-start), var(--primary-btn-end));
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
 
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 
-        .footer-links {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #64748b;
-            font-size: 0.85rem;
-        }
+.footer-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
 
-        .footer-links a {
-            color: #6366f1;
-            text-decoration: none;
-            font-weight: 700;
-        }
+.footer-links a {
+    color: var(--primary-btn-start);
+    text-decoration: none;
+    font-weight: 700;
+}
 
-        .toast {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            z-index: 1000;
-            transition: bottom 0.3s;
-        }
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-dark);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    z-index: 1000;
+    transition: bottom 0.3s;
+}
 
-        .toast.show {
-            bottom: 30px;
-        }
+.toast.show {
+    bottom: 30px;
+}
 
-        .loading-spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.6s linear infinite;
-        }
+.loading-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+}
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
-        @media (max-width: 768px) {
-            .desktop-layout { display: none; }
-            .mobile-layout { display: flex; align-items: center; justify-content: center; }
-        }
+@media (max-width: 768px) {
+    .desktop-layout { display: none; }
+    .mobile-layout { display: flex; align-items: center; justify-content: center; }
+}
 
-        @media (min-width: 769px) {
-            .desktop-layout { display: flex; }
-            .mobile-layout { display: none; }
-        }
+@media (min-width: 769px) {
+    .desktop-layout { display: flex; }
+    .mobile-layout { display: none; }
+}
     </style>
 </head>
 <body>
@@ -543,70 +566,47 @@
         </div>
     </div>
 
-    <!-- ========================================
-         تصميم الهاتف - Plantland Style
-    ======================================== -->
-    <div class="mobile-layout">
-        <div class="mobile-bg">
-            <div class="tree">
-                <div class="trunk"></div>
-                <div class="branches"></div>
-            </div>
-            <div class="plant plant-1"><div class="stem"></div><div class="leaf" style="top:-15px; left:-10px; width:25px; height:25px;"></div></div>
-            <div class="plant plant-2"><div class="stem"></div><div class="leaf" style="top:-10px; left:-5px; width:20px; height:20px;"></div></div>
-            <div class="plant plant-3"><div class="stem" style="height:50px;"></div><div class="leaf" style="top:-20px; left:-12px; width:28px; height:28px;"></div></div>
-            <div class="floating-leaf" style="top:20%; left:10%; animation-delay:0s;"></div>
-            <div class="floating-leaf" style="top:40%; right:5%; animation-delay:3s; width:15px; height:15px;"></div>
-            <div class="floating-leaf" style="top:60%; left:15%; animation-delay:6s; width:12px; height:12px;"></div>
+  <div class="mobile-layout">
+        <div class="mobile-header">
+            <div class="header-shape"></div>
+            <a href="#" class="back-link" id="mobileLoginRedirectBtn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to login</span>
+            </a>
         </div>
 
         <div class="mobile-card">
-            <div class="mobile-logo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-            </div>
-            <h2>Create Account</h2>
-            <p class="subtitle">Join our community today</p>
+            <h2>Sign Up</h2>
 
             <form id="mobileSignupForm">
-                <div class="input-group">
-                    <input type="text" id="mobileUsername" placeholder=" " required>
-                    <label>Username</label>
-                    <i class="fas fa-user icon"></i>
+                <div class="input-pill">
+                    <i class="far fa-envelope"></i>
+                    <input type="email" id="mobileEmail" placeholder="Email" required>
                 </div>
 
-                <div class="input-group">
-                    <input type="email" id="mobileEmail" placeholder=" " required>
-                    <label>Email Address</label>
-                    <i class="fas fa-envelope icon"></i>
+                <div class="input-pill">
+                    <i class="fas fa-lock" id="mobileTogglePassword" style="cursor: pointer;"></i>
+                    <input type="password" id="mobilePassword" placeholder="Password" required>
                 </div>
-
-                <div class="input-group">
-                    <input type="password" id="mobilePassword" placeholder=" " required>
-                    <label>Password</label>
-                    <i class="fas fa-lock icon" id="mobileTogglePassword" style="cursor: pointer;"></i>
-                </div>
-                <div class="password-strength">
+                
+                <div class="password-strength mobile-strength-container">
                     <div class="strength-bar" id="mobileStrengthBar"></div>
-                </div>
-                <div class="strength-text" id="mobileStrengthText">Enter a strong password</div>
-
-                <div class="input-group">
-                    <input type="password" id="mobileConfirmPwd" placeholder=" " required>
-                    <label>Confirm Password</label>
-                    <i class="fas fa-check-circle icon" id="mobileToggleConfirmPwd" style="cursor: pointer;"></i>
+                    <div class="strength-text" id="mobileStrengthText" style="display: none;"></div>
                 </div>
 
-                <button type="submit" class="btn-primary" id="mobileSubmitBtn">
-                    <span>Sign Up</span>
-                    <i class="fas fa-arrow-left"></i>
+                <div class="input-pill">
+                    <i class="fas fa-lock" id="mobileToggleConfirmPwd" style="cursor: pointer;"></i>
+                    <input type="password" id="mobileConfirmPwd" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="input-pill">
+                    <i class="fas fa-mobile-alt"></i>
+                    <input type="text" id="mobileUsername" placeholder="Phone" required>
+                </div>
+
+                <button type="submit" class="btn-plantland" id="mobileSubmitBtn">
+                    Sign Up
                 </button>
-
-                <div class="footer-links">
-                    Already have an account?
-                    <a href="#" id="mobileLoginRedirect">Sign In</a>
-                </div>
             </form>
         </div>
     </div>
