@@ -35,13 +35,20 @@ function saveUsers(users) {
 }
 
 // ============================================
-// جعل صفحة welcome.html هي الصفحة الرئيسية
+// ✅ جعل صفحة تسجيل الدخول هي الصفحة الرئيسية
 // ============================================
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
+    // التحقق إذا كان المستخدم مسجل الدخول مسبقاً
+    if (req.session.user) {
+        // إذا كان مسجل دخول، اذهب إلى صفحة الترحيب
+        res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
+    } else {
+        // إذا لم يكن مسجل دخول، اذهب إلى صفحة تسجيل الدخول
+        res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    }
 });
 
-// Serve login page
+// Serve login page (if accessed directly)
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
@@ -49,6 +56,15 @@ app.get('/login', (req, res) => {
 // Serve signup page
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+
+// Serve welcome page (protected - requires login)
+app.get('/welcome', (req, res) => {
+    if (req.session.user) {
+        res.sendFile(path.join(__dirname, 'public', 'welcome.html'));
+    } else {
+        res.redirect('/login');
+    }
 });
 
 // Routes API
@@ -131,5 +147,5 @@ app.post('/api/logout', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📱 الصفحة الرئيسية: http://localhost:${PORT}/`);
+    console.log(`📱 صفحة تسجيل الدخول: http://localhost:${PORT}/`);
 });
