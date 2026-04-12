@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>إنشاء حساب </title>
+    <title>إنشاء حساب | Rento</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -261,18 +261,18 @@
         }
 
         .mobile-card {
-    position: relative;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border-radius: 2rem;
-    margin: 1rem;  /* تم التغيير: كانت 2rem 1.5rem */
-    padding: 2rem 1.8rem;  /* تم التغيير: زيادة padding */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: calc(100% - 2rem);  /* تم الإضافة */
-    max-width: 400px;  /* تم الإضافة */
-}
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            margin: 1rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: calc(100% - 2rem);
+            max-width: 400px;
+        }
 
         .mobile-logo {
             width: 70px;
@@ -700,6 +700,15 @@
             }
         }
 
+        // تسجيل الخروج من أي جلسة حالية (للتأكد)
+        async function ensureLoggedOut() {
+            try {
+                await auth.signOut();
+            } catch (e) {
+                // تجاهل الأخطاء
+            }
+        }
+
         // Desktop signup
         const desktopForm = document.getElementById('signupForm');
         const desktopUsername = document.getElementById('username');
@@ -748,6 +757,10 @@
 
         desktopForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // التأكد من تسجيل الخروج أولاً (لن يتم تسجيل الدخول تلقائياً)
+            await ensureLoggedOut();
+            
             const username = desktopUsername.value.trim();
             const email = desktopEmail.value.trim();
             const password = desktopPassword.value;
@@ -760,9 +773,16 @@
             desktopSubmitBtn.innerHTML = '<div class="loading-spinner"></div> جاري إنشاء الحساب...';
             
             try {
+                // ✅ إنشاء الحساب فقط - بدون تسجيل دخول تلقائي
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 await userCredential.user.updateProfile({ displayName: username });
-                showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح`, false);
+                
+                // ✅ تسجيل الخروج فوراً بعد إنشاء الحساب
+                await auth.signOut();
+                
+                showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح. الرجاء تسجيل الدخول`, false);
+                
+                // ✅ إعادة التوجيه إلى صفحة تسجيل الدخول بعد 1.5 ثانية
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 1500);
@@ -801,6 +821,10 @@
 
         mobileForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // التأكد من تسجيل الخروج أولاً
+            await ensureLoggedOut();
+            
             const username = mobileUsername.value.trim();
             const email = mobileEmail.value.trim();
             const password = mobilePassword.value;
@@ -813,9 +837,16 @@
             mobileSubmitBtn.innerHTML = '<div class="loading-spinner"></div> Creating account...';
             
             try {
+                // ✅ إنشاء الحساب فقط - بدون تسجيل دخول تلقائي
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 await userCredential.user.updateProfile({ displayName: username });
-                showToast(`✨ Welcome ${username}! Account created successfully`, false);
+                
+                // ✅ تسجيل الخروج فوراً بعد إنشاء الحساب
+                await auth.signOut();
+                
+                showToast(`✨ Welcome ${username}! Account created successfully. Please login`, false);
+                
+                // ✅ إعادة التوجيه إلى صفحة تسجيل الدخول
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 1500);
@@ -843,6 +874,11 @@
         document.getElementById('mobileLoginRedirect')?.addEventListener('click', (e) => {
             e.preventDefault();
             window.location.href = 'login.html';
+        });
+        
+        // التأكد من عدم وجود جلسة نشطة عند تحميل الصفحة
+        window.addEventListener('load', async () => {
+            await ensureLoggedOut();
         });
     </script>
 </body>
