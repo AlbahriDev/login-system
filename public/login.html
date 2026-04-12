@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title> تسجيل الدخول</title>
+    <title>Rento | تسجيل الدخول</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -323,7 +323,7 @@
         }
 
         /* ========================================
-           تصميم الهاتف - Plantland Style (إنشاء حساب)
+           تصميم الهاتف - Plantland Style (تسجيل الدخول)
            ======================================== */
         .mobile-layout {
             display: none;
@@ -439,16 +439,18 @@
         }
 
         .mobile-card {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            margin: 2rem 1.5rem;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-radius: 2rem;
+    margin: 1rem;  /* كانت 2rem 1.5rem - قللناها */
+    padding: 2rem 1.5rem;  /* زدنا padding */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: calc(100% - 2rem);  /* أضف هذا السطر */
+    max-width: 400px;  /* أضف هذا السطر لجعلها أكبر */
+}
 
         .mobile-logo {
             width: 70px;
@@ -467,8 +469,8 @@
             color: white;
         }
 
-        .mobile-card h2 {
-            font-size: 1.6rem;
+        .mobile-card h1 {
+            font-size: 2rem;
             color: #1e293b;
             margin-bottom: 0.25rem;
         }
@@ -476,10 +478,11 @@
         .mobile-card .subtitle {
             color: #64748b;
             font-size: 0.85rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .btn-primary {
+        /* أزرار الهاتف */
+        .mobile-login-btn {
             width: 100%;
             padding: 0.9rem;
             background: linear-gradient(135deg, #2e7d32, #43a047);
@@ -495,27 +498,38 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            margin-top: 0.5rem;
         }
 
-        .btn-primary:hover {
+        .mobile-login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
         }
 
-        .btn-primary:disabled {
+        .mobile-login-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
 
-        .footer-links {
+        .mobile-forgot {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .mobile-forgot a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .mobile-signup-link {
             text-align: center;
             margin-top: 1.5rem;
             color: #64748b;
             font-size: 0.85rem;
         }
 
-        .footer-links a {
+        .mobile-signup-link a {
             color: #2e7d32;
             text-decoration: none;
             font-weight: 700;
@@ -545,6 +559,10 @@
             text-align: center;
             transform: scale(0.9);
             transition: transform 0.5s ease;
+            background: white;
+            padding: 2rem;
+            border-radius: 2rem;
+            max-width: 350px;
         }
 
         .welcome-screen.active .welcome-content {
@@ -552,7 +570,7 @@
         }
 
         .welcome-content h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #1e293b;
             margin-bottom: 0.5rem;
         }
@@ -698,7 +716,7 @@
     </div>
 
     <!-- ========================================
-         تصميم الهاتف - Plantland Style (إنشاء حساب)
+         تصميم الهاتف - Plantland Style (تسجيل الدخول)
     ======================================== -->
     <div class="mobile-layout">
         <div class="mobile-bg">
@@ -720,42 +738,33 @@
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h2>إنشاء حساب</h2>
-            <p class="subtitle">انضم إلى مجتمعنا اليوم</p>
+            <h1>Hello!</h1>
+            <p class="subtitle">Welcome to plantland</p>
 
-            <form id="mobileSignupForm">
-                <div class="input-group">
-                    <input type="text" id="mobileUsername" placeholder=" " required>
-                    <label>اسم المستخدم</label>
-                    <i class="fas fa-user icon"></i>
-                </div>
-
+            <form id="mobileLoginForm">
                 <div class="input-group">
                     <input type="email" id="mobileEmail" placeholder=" " required>
-                    <label>البريد الإلكتروني</label>
+                    <label>Email Address</label>
                     <i class="fas fa-envelope icon"></i>
                 </div>
 
                 <div class="input-group">
                     <input type="password" id="mobilePassword" placeholder=" " required>
-                    <label>كلمة المرور</label>
+                    <label>Password</label>
                     <i class="fas fa-lock icon" id="mobileTogglePassword" style="cursor: pointer;"></i>
                 </div>
 
-                <div class="input-group">
-                    <input type="password" id="mobileConfirmPwd" placeholder=" " required>
-                    <label>تأكيد كلمة المرور</label>
-                    <i class="fas fa-check-circle icon" id="mobileToggleConfirmPwd" style="cursor: pointer;"></i>
-                </div>
-
-                <button type="submit" class="btn-primary" id="mobileSubmitBtn">
-                    <span>إنشاء حساب</span>
+                <button type="submit" class="mobile-login-btn" id="mobileLoginBtn">
+                    <span>Login</span>
                     <i class="fas fa-arrow-left"></i>
                 </button>
 
-                <div class="footer-links">
-                    لديك حساب بالفعل؟
-                    <a href="#" id="loginRedirectMobile">تسجيل الدخول</a>
+                <div class="mobile-forgot">
+                    <a href="#" id="mobileForgotBtn">Forgot Password</a>
+                </div>
+
+                <div class="mobile-signup-link">
+                    Don't have an account? <a href="#" id="mobileSignupLink">Sign Up</a>
                 </div>
             </form>
         </div>
@@ -842,7 +851,6 @@
         const desktopRemember = document.getElementById('rememberCheck');
         const desktopLoginBtn = document.getElementById('loginBtn');
 
-        // Toggle password visibility
         const togglePassword = document.getElementById('togglePassword');
         if (togglePassword) {
             togglePassword.addEventListener('click', () => {
@@ -898,18 +906,13 @@
             }
         });
 
-        // ========== Mobile Signup ==========
-        const mobileForm = document.getElementById('mobileSignupForm');
-        const mobileUsername = document.getElementById('mobileUsername');
+        // ========== Mobile Login ==========
+        const mobileForm = document.getElementById('mobileLoginForm');
         const mobileEmail = document.getElementById('mobileEmail');
         const mobilePassword = document.getElementById('mobilePassword');
-        const mobileConfirm = document.getElementById('mobileConfirmPwd');
-        const mobileSubmitBtn = document.getElementById('mobileSubmitBtn');
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
 
-        // Toggle password visibility for mobile
         const mobileTogglePassword = document.getElementById('mobileTogglePassword');
-        const mobileToggleConfirm = document.getElementById('mobileToggleConfirmPwd');
-
         if (mobileTogglePassword) {
             mobileTogglePassword.addEventListener('click', () => {
                 const type = mobilePassword.type === 'password' ? 'text' : 'password';
@@ -919,70 +922,42 @@
             });
         }
 
-        if (mobileToggleConfirm) {
-            mobileToggleConfirm.addEventListener('click', () => {
-                const type = mobileConfirm.type === 'password' ? 'text' : 'password';
-                mobileConfirm.type = type;
-                mobileToggleConfirm.classList.toggle('fa-check-circle');
-                mobileToggleConfirm.classList.toggle('fa-eye-slash');
-            });
-        }
-
         mobileForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = mobileUsername.value.trim();
             const email = mobileEmail.value.trim();
-            const password = mobilePassword.value;
-            const confirm = mobileConfirm.value;
+            const password = mobilePassword.value.trim();
 
-            if (!username || !email || !password || !confirm) {
-                showToast('❌ يرجى ملء جميع الحقول', true);
-                return;
-            }
-            if (username.length < 3) {
-                showToast('👤 اسم المستخدم يجب أن يكون 3 أحرف على الأقل', true);
-                return;
-            }
             if (!email.includes('@')) {
-                showToast('📧 البريد الإلكتروني غير صالح', true);
+                showToast('Please enter a valid email', true);
                 return;
             }
             if (password.length < 6) {
-                showToast('🔒 كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
-                return;
-            }
-            if (password !== confirm) {
-                showToast('❌ كلمة المرور غير متطابقة', true);
+                showToast('Password must be at least 6 characters', true);
                 return;
             }
 
-            mobileSubmitBtn.disabled = true;
-            mobileSubmitBtn.innerHTML = '<div class="loading-spinner"></div> جاري إنشاء الحساب...';
+            mobileLoginBtn.disabled = true;
+            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> Logging in...';
 
             try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                await userCredential.user.updateProfile({ displayName: username });
-                showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح`);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                showWelcomeScreen(userCredential.user);
+                showToast('Login successful!');
             } catch (error) {
-                let errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
-                if (error.code === 'auth/email-already-in-use') {
-                    errorMessage = '⚠️ البريد الإلكتروني مسجل مسبقاً';
-                } else if (error.code === 'auth/invalid-email') {
-                    errorMessage = '📧 البريد الإلكتروني غير صالح';
-                } else if (error.code === 'auth/weak-password') {
-                    errorMessage = '🔒 كلمة المرور ضعيفة جداً';
+                if (error.code === 'auth/user-not-found') {
+                    showToast('No account found with this email', true);
+                } else if (error.code === 'auth/wrong-password') {
+                    showToast('Incorrect password', true);
+                } else {
+                    showToast(error.message, true);
                 }
-                showToast(errorMessage, true);
             } finally {
-                mobileSubmitBtn.disabled = false;
-                mobileSubmitBtn.innerHTML = '<span>إنشاء حساب</span><i class="fas fa-arrow-left"></i>';
+                mobileLoginBtn.disabled = false;
+                mobileLoginBtn.innerHTML = '<span>Login</span><i class="fas fa-arrow-left"></i>';
             }
         });
 
-        // ========== Google Sign-In ==========
+        // ========== Google Sign-In (Desktop) ==========
         async function googleSignIn() {
             const provider = new firebase.auth.GoogleAuthProvider();
             try {
@@ -996,7 +971,7 @@
 
         document.getElementById('googleBtn')?.addEventListener('click', googleSignIn);
 
-        // ========== GitHub Sign-In ==========
+        // ========== GitHub Sign-In (Desktop) ==========
         async function githubSignIn() {
             const provider = new firebase.auth.GithubAuthProvider();
             try {
@@ -1010,35 +985,40 @@
 
         document.getElementById('githubBtn')?.addEventListener('click', githubSignIn);
 
-        // ========== Forgot Password ==========
-        async function handleForgotPassword() {
-            const email = prompt('الرجاء إدخال بريدك الإلكتروني:');
+        // ========== Forgot Password (Desktop & Mobile) ==========
+        async function handleForgotPassword(isDesktop = true) {
+            const email = prompt(isDesktop ? 'الرجاء إدخال بريدك الإلكتروني:' : 'Please enter your email address:');
             if (email && email.includes('@')) {
                 try {
                     await auth.sendPasswordResetEmail(email);
-                    showToast(`تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
+                    showToast(isDesktop ? `تم إرسال رابط استعادة كلمة المرور إلى ${email}` : `Password reset link sent to ${email}`);
                 } catch (error) {
                     showToast(error.message, true);
                 }
             } else if (email) {
-                showToast('الرجاء إدخال بريد إلكتروني صحيح', true);
+                showToast(isDesktop ? 'الرجاء إدخال بريد إلكتروني صحيح' : 'Please enter a valid email', true);
             }
         }
 
         document.getElementById('forgotPassword')?.addEventListener('click', (e) => {
             e.preventDefault();
-            handleForgotPassword();
+            handleForgotPassword(true);
+        });
+
+        document.getElementById('mobileForgotBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleForgotPassword(false);
         });
 
         // ========== Redirects ==========
         document.getElementById('signupRedirectDesktop')?.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('يمكنك إنشاء حساب جديد من خلال الهاتف المحمول، أو قم بتصغير حجم المتصفح لعرض نموذج إنشاء الحساب');
+            window.location.href = 'signup.html';
         });
 
-        document.getElementById('loginRedirectMobile')?.addEventListener('click', (e) => {
+        document.getElementById('mobileSignupLink')?.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('يتم تسجيل الدخول من خلال شاشة الكمبيوتر، أو قم بتكبير حجم المتصفح');
+            window.location.href = 'signup.html';
         });
 
         logoutBtn.addEventListener('click', logout);
