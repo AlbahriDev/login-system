@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>تسجيل الدخول | Rento</title>
+    <title> تسجيل الدخول</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -23,7 +24,7 @@
         }
 
         /* ========================================
-           تصميم الكمبيوتر
+           تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
            ======================================== */
         .desktop-layout {
             display: flex;
@@ -31,10 +32,9 @@
             width: 100%;
         }
 
-        /* القسم الأيمن - خلفية إنشاء حساب (بدل الزرقاء) */
         .hero-section {
             flex: 1;
-            background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            background: linear-gradient(145deg, #0a0a2a 0%, #0f0f3a 50%, #1a1a4e 100%);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -44,12 +44,11 @@
             padding: 3rem;
         }
 
-        /* أشكال زخرفية في الخلفية */
         .hero-section .bg-circle-1 {
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
             top: -100px;
             right: -100px;
             border-radius: 50%;
@@ -60,22 +59,11 @@
             position: absolute;
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
             bottom: -50px;
             left: -80px;
             border-radius: 50%;
             animation: float2 10s ease-in-out infinite reverse;
-        }
-
-        .hero-section .bg-circle-3 {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
-            top: 40%;
-            left: 20%;
-            border-radius: 50%;
-            animation: float3 14s ease-in-out infinite;
         }
 
         @keyframes float1 {
@@ -86,11 +74,6 @@
         @keyframes float2 {
             0%, 100% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(-40px, 20px) scale(1.2); }
-        }
-
-        @keyframes float3 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(20px, 40px) rotate(180deg); }
         }
 
         .hero-content {
@@ -104,13 +87,13 @@
         .hero-logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 2rem;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
         }
 
         .hero-logo svg {
@@ -119,73 +102,18 @@
             color: white;
         }
 
-        /* نصوص القسم الأيمن - خاصة بإنشاء حساب */
-        .hero-content .create-title {
-            font-size: 2.5rem;
+        .hero-content h1 {
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #c4b5fd);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            margin-bottom: 1rem;
         }
 
-        .hero-content .create-subtitle {
+        .hero-content p {
             font-size: 1rem;
             opacity: 0.8;
-            margin-bottom: 1.5rem;
             line-height: 1.8;
         }
 
-        .hero-content .features-list {
-            text-align: right;
-            margin: 2rem 0;
-            padding-right: 1.5rem;
-        }
-
-        .hero-content .features-list li {
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.85;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .hero-content .features-list li svg {
-            width: 20px;
-            height: 20px;
-            color: #8b5cf6;
-        }
-
-        /* زر إنشاء حساب في القسم الأيمن */
-        .hero-signup-btn {
-            margin-top: 2rem;
-            padding: 0.9rem 2rem;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            border: none;
-            border-radius: 2rem;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Cairo', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            max-width: 250px;
-        }
-
-        .hero-signup-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
-        }
-
-        /* القسم الأيسر - نموذج تسجيل الدخول */
         .form-section {
             flex: 1;
             display: flex;
@@ -216,67 +144,6 @@
             font-size: 0.9rem;
         }
 
-        /* ========================================
-           تصميم الهاتف
-           ======================================== */
-        .mobile-layout {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mobile-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            bottom: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        .mobile-card {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            margin: 2rem 1.5rem;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            text-align: center;
-        }
-
-        .mobile-logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
-
-        .mobile-logo svg {
-            width: 38px;
-            height: 38px;
-            color: white;
-        }
-
-        .mobile-card h2 {
-            font-size: 1.6rem;
-            color: #1e293b;
-            margin-bottom: 0.25rem;
-        }
-
-        .mobile-card .subtitle {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
         /* تصميم الحقول */
         .input-group {
             position: relative;
@@ -296,9 +163,9 @@
         }
 
         .input-group input:focus {
-            border-color: #8b5cf6;
+            border-color: #6366f1;
             background: white;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .input-group label {
@@ -320,7 +187,7 @@
             top: 0;
             transform: translateY(-50%) scale(0.85);
             background: white;
-            color: #8b5cf6;
+            color: #6366f1;
             right: 0.8rem;
         }
 
@@ -331,10 +198,11 @@
             transform: translateY(-50%);
             color: #94a3b8;
             transition: color 0.3s;
+            font-size: 1.1rem;
         }
 
         .input-group input:focus ~ .icon {
-            color: #8b5cf6;
+            color: #6366f1;
         }
 
         .input-group input::placeholder {
@@ -360,11 +228,11 @@
         .remember input {
             width: 1rem;
             height: 1rem;
-            accent-color: #8b5cf6;
+            accent-color: #6366f1;
         }
 
         .forgot {
-            color: #8b5cf6;
+            color: #6366f1;
             text-decoration: none;
             font-weight: 600;
         }
@@ -372,7 +240,7 @@
         .login-btn {
             width: 100%;
             padding: 0.9rem;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
             border-radius: 1rem;
             color: white;
@@ -389,7 +257,7 @@
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
 
         .divider {
@@ -439,6 +307,218 @@
         .social-btn svg {
             width: 20px;
             height: 20px;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .signup-link a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* ========================================
+           تصميم الهاتف - Plantland Style (إنشاء حساب)
+           ======================================== */
+        .mobile-layout {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 0;
+            left: -50px;
+            width: 300px;
+            height: 400px;
+            opacity: 0.2;
+        }
+
+        .tree .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 30px;
+            height: 150px;
+            background: #5d4037;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .tree .branches {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            transform: translateX(-50%);
+        }
+
+        .tree .branches::before,
+        .tree .branches::after {
+            content: '';
+            position: absolute;
+            background: #2e7d32;
+            border-radius: 50%;
+        }
+
+        .tree .branches::before {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            left: -40px;
+        }
+
+        .tree .branches::after {
+            width: 100px;
+            height: 100px;
+            top: -10px;
+            right: -30px;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            height: 80px;
+        }
+
+        .plant-1 { right: 20px; }
+        .plant-2 { right: 100px; bottom: -10px; width: 50px; }
+        .plant-3 { left: 80px; bottom: 20px; width: 70px; }
+
+        .plant .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 40px;
+            background: #5d4037;
+            transform: translateX(-50%);
+        }
+
+        .plant .leaf {
+            position: absolute;
+            background: #388e3c;
+            border-radius: 50% 0 50% 0;
+            transform: rotate(45deg);
+        }
+
+        .floating-leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #66bb6a;
+            border-radius: 0 50% 0 50%;
+            transform: rotate(45deg);
+            opacity: 0.3;
+            animation: leafFloat 15s infinite linear;
+        }
+
+        @keyframes leafFloat {
+            0% { transform: rotate(45deg) translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: rotate(135deg) translateY(-100px) translateX(50px); opacity: 0.6; }
+            100% { transform: rotate(225deg) translateY(-200px) translateX(100px); opacity: 0; }
+        }
+
+        .mobile-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            margin: 2rem 1.5rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .mobile-logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .mobile-logo svg {
+            width: 38px;
+            height: 38px;
+            color: white;
+        }
+
+        .mobile-card h2 {
+            font-size: 1.6rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-card .subtitle {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .footer-links a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 700;
         }
 
         /* شاشة الترحيب */
@@ -525,11 +605,13 @@
             to { transform: rotate(360deg); }
         }
 
+        /* شاشة الهاتف (تحت 768px) */
         @media (max-width: 768px) {
             .desktop-layout { display: none; }
             .mobile-layout { display: flex; align-items: center; justify-content: center; }
         }
 
+        /* شاشة الكمبيوتر (فوق 768px) */
         @media (min-width: 769px) {
             .desktop-layout { display: flex; }
             .mobile-layout { display: none; }
@@ -538,57 +620,24 @@
 </head>
 <body>
 
-    <!-- تصميم الكمبيوتر -->
+    <!-- ========================================
+         تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
+    ======================================== -->
     <div class="desktop-layout">
-        <!-- القسم الأيمن - خلفية إنشاء حساب (تم تعديلها) -->
         <div class="hero-section">
             <div class="bg-circle-1"></div>
             <div class="bg-circle-2"></div>
-            <div class="bg-circle-3"></div>
             <div class="hero-content">
                 <div class="hero-logo">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                     </svg>
                 </div>
-                <div class="create-title">إنشاء حساب جديد</div>
-                <div class="create-subtitle">انضم إلى منصة Rento واستمتع بخدماتنا المتكاملة</div>
-                
-                <ul class="features-list">
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                        <span>إدارة أعمالك بكل سهولة</span>
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                        <span>تقارير وتحليلات متقدمة</span>
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 6L9 17l-5-5"/>
-                        </svg>
-                        <span>دعم فني على مدار الساعة</span>
-                    </li>
-                </ul>
-
-                <!-- زر إنشاء حساب - عند النقر يحول إلى صفحة إنشاء الحساب -->
-                <button class="hero-signup-btn" id="heroSignupBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="8.5" cy="7" r="4"/>
-                        <line x1="20" y1="8" x2="20" y2="14"/>
-                        <line x1="17" y1="11" x2="23" y2="11"/>
-                    </svg>
-                    <span>إنشاء حساب جديد</span>
-                </button>
+                <h1>Rento</h1>
+                <p>منصة متكاملة لإدارة أعمالك<br>بكل سهولة واحترافية</p>
             </div>
         </div>
 
-        <!-- القسم الأيسر - نموذج تسجيل الدخول (كما هو بدون تغيير) -->
         <div class="form-section">
             <div class="form-container">
                 <div class="form-header">
@@ -600,19 +649,13 @@
                     <div class="input-group">
                         <input type="email" id="email" placeholder=" " required>
                         <label>البريد الإلكتروني</label>
-                        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
+                        <i class="fas fa-envelope icon"></i>
                     </div>
 
                     <div class="input-group">
                         <input type="password" id="password" placeholder=" " required>
                         <label>كلمة المرور</label>
-                        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
+                        <i class="fas fa-lock icon" id="togglePassword" style="cursor: pointer;"></i>
                     </div>
 
                     <div class="options">
@@ -625,9 +668,7 @@
 
                     <button type="submit" class="login-btn" id="loginBtn">
                         <span>تسجيل الدخول</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
+                        <i class="fas fa-arrow-left"></i>
                     </button>
                 </form>
 
@@ -648,77 +689,75 @@
                         </svg>
                     </button>
                 </div>
+
+                <div class="signup-link">
+                    ليس لديك حساب؟ <a href="#" id="signupRedirectDesktop">إنشاء حساب جديد</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- تصميم الهاتف -->
+    <!-- ========================================
+         تصميم الهاتف - Plantland Style (إنشاء حساب)
+    ======================================== -->
     <div class="mobile-layout">
-        <div class="mobile-bg"></div>
+        <div class="mobile-bg">
+            <div class="tree">
+                <div class="trunk"></div>
+                <div class="branches"></div>
+            </div>
+            <div class="plant plant-1"><div class="stem"></div><div class="leaf" style="top:-15px; left:-10px; width:25px; height:25px;"></div></div>
+            <div class="plant plant-2"><div class="stem"></div><div class="leaf" style="top:-10px; left:-5px; width:20px; height:20px;"></div></div>
+            <div class="plant plant-3"><div class="stem" style="height:50px;"></div><div class="leaf" style="top:-20px; left:-12px; width:28px; height:28px;"></div></div>
+            <div class="floating-leaf" style="top:20%; left:10%; animation-delay:0s;"></div>
+            <div class="floating-leaf" style="top:40%; right:5%; animation-delay:3s; width:15px; height:15px;"></div>
+            <div class="floating-leaf" style="top:60%; left:15%; animation-delay:6s; width:12px; height:12px;"></div>
+        </div>
+
         <div class="mobile-card">
             <div class="mobile-logo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h2>مرحباً بك</h2>
-            <p class="subtitle">سجل دخولك للمتابعة إلى حسابك</p>
+            <h2>إنشاء حساب</h2>
+            <p class="subtitle">انضم إلى مجتمعنا اليوم</p>
 
-            <form id="mobileLoginForm">
+            <form id="mobileSignupForm">
+                <div class="input-group">
+                    <input type="text" id="mobileUsername" placeholder=" " required>
+                    <label>اسم المستخدم</label>
+                    <i class="fas fa-user icon"></i>
+                </div>
+
                 <div class="input-group">
                     <input type="email" id="mobileEmail" placeholder=" " required>
                     <label>البريد الإلكتروني</label>
-                    <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                    </svg>
+                    <i class="fas fa-envelope icon"></i>
                 </div>
 
                 <div class="input-group">
                     <input type="password" id="mobilePassword" placeholder=" " required>
                     <label>كلمة المرور</label>
-                    <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
+                    <i class="fas fa-lock icon" id="mobileTogglePassword" style="cursor: pointer;"></i>
                 </div>
 
-                <div class="options">
-                    <label class="remember"><input type="checkbox" id="mobileRememberCheck"><span>تذكر بياناتي</span></label>
-                    <a href="#" class="forgot" id="mobileForgotPassword">نسيت كلمة المرور؟</a>
+                <div class="input-group">
+                    <input type="password" id="mobileConfirmPwd" placeholder=" " required>
+                    <label>تأكيد كلمة المرور</label>
+                    <i class="fas fa-check-circle icon" id="mobileToggleConfirmPwd" style="cursor: pointer;"></i>
                 </div>
 
-                <button type="submit" class="login-btn" id="mobileLoginBtn">
-                    <span>تسجيل الدخول</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
+                <button type="submit" class="btn-primary" id="mobileSubmitBtn">
+                    <span>إنشاء حساب</span>
+                    <i class="fas fa-arrow-left"></i>
                 </button>
+
+                <div class="footer-links">
+                    لديك حساب بالفعل؟
+                    <a href="#" id="loginRedirectMobile">تسجيل الدخول</a>
+                </div>
             </form>
-
-            <div class="divider"><span>أو</span></div>
-
-            <div class="social-buttons">
-                <button class="social-btn" id="mobileGoogleBtn">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                </button>
-                <button class="social-btn" id="mobileGithubBtn">
-                    <svg viewBox="0 0 24 24" fill="#1e293b">
-                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div style="margin-top: 1.5rem;">
-                <button class="hero-signup-btn" id="mobileHeroSignupBtn" style="width: 100%; background: linear-gradient(135deg, #8b5cf6, #ec4899);">
-                    <span>إنشاء حساب جديد</span>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -732,12 +771,12 @@
             </div>
             <h1 id="welcomeName">مرحباً</h1>
             <p id="welcomeMessage">تم تسجيل دخولك بنجاح</p>
-            <p id="userEmailDisplay" style="color: #8b5cf6; margin-bottom: 1rem;"></p>
+            <p id="userEmailDisplay" style="color: #6366f1; margin-bottom: 1rem;"></p>
             <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
         </div>
     </div>
 
-    <div class="toast" id="toast"><span id="toastMsg">Message</span></div>
+    <div class="toast" id="toastMsg"></div>
 
     <script>
         // Firebase Configuration
@@ -754,32 +793,19 @@
         const auth = firebase.auth();
 
         // Elements
-        const toast = document.getElementById('toast');
-        const toastMsg = document.getElementById('toastMsg');
+        const toast = document.getElementById('toastMsg');
         const welcomeScreen = document.getElementById('welcomeScreen');
         const welcomeName = document.getElementById('welcomeName');
         const welcomeMessage = document.getElementById('welcomeMessage');
         const userEmailDisplay = document.getElementById('userEmailDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
 
-        // أزرار إنشاء حساب - تحويل إلى صفحة signup.html
-        const heroSignupBtn = document.getElementById('heroSignupBtn');
-        const mobileHeroSignupBtn = document.getElementById('mobileHeroSignupBtn');
-
-        heroSignupBtn?.addEventListener('click', () => {
-            window.location.href = 'signup.html';
-        });
-
-        mobileHeroSignupBtn?.addEventListener('click', () => {
-            window.location.href = 'signup.html';
-        });
-
         let toastTimeout;
 
         function showToast(message, isError = false) {
             clearTimeout(toastTimeout);
-            toastMsg.textContent = message;
-            toast.style.background = isError ? '#ef4444' : '#1e293b';
+            toast.textContent = message;
+            toast.style.background = isError ? '#ef4444' : '#10b981';
             toast.classList.add('show');
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
@@ -805,16 +831,27 @@
                     window.location.reload();
                 }, 500);
             } catch (error) {
-                showToast('حدث خطأ أثناء تسجيل الخروج: ' + error.message, true);
+                showToast('حدث خطأ: ' + error.message, true);
             }
         }
 
-        // Desktop Login
+        // ========== Desktop Login ==========
         const desktopForm = document.getElementById('loginForm');
         const desktopEmail = document.getElementById('email');
         const desktopPassword = document.getElementById('password');
         const desktopRemember = document.getElementById('rememberCheck');
         const desktopLoginBtn = document.getElementById('loginBtn');
+
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        if (togglePassword) {
+            togglePassword.addEventListener('click', () => {
+                const type = desktopPassword.type === 'password' ? 'text' : 'password';
+                desktopPassword.type = type;
+                togglePassword.classList.toggle('fa-lock');
+                togglePassword.classList.toggle('fa-unlock-alt');
+            });
+        }
 
         if (localStorage.getItem('rememberedEmail')) {
             desktopEmail.value = localStorage.getItem('rememberedEmail');
@@ -857,76 +894,109 @@
                 }
             } finally {
                 desktopLoginBtn.disabled = false;
-                desktopLoginBtn.innerHTML = '<span>تسجيل الدخول</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                desktopLoginBtn.innerHTML = '<span>تسجيل الدخول</span><i class="fas fa-arrow-left"></i>';
             }
         });
 
-        // Mobile Login
-        const mobileForm = document.getElementById('mobileLoginForm');
+        // ========== Mobile Signup ==========
+        const mobileForm = document.getElementById('mobileSignupForm');
+        const mobileUsername = document.getElementById('mobileUsername');
         const mobileEmail = document.getElementById('mobileEmail');
         const mobilePassword = document.getElementById('mobilePassword');
-        const mobileRemember = document.getElementById('mobileRememberCheck');
-        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileConfirm = document.getElementById('mobileConfirmPwd');
+        const mobileSubmitBtn = document.getElementById('mobileSubmitBtn');
+
+        // Toggle password visibility for mobile
+        const mobileTogglePassword = document.getElementById('mobileTogglePassword');
+        const mobileToggleConfirm = document.getElementById('mobileToggleConfirmPwd');
+
+        if (mobileTogglePassword) {
+            mobileTogglePassword.addEventListener('click', () => {
+                const type = mobilePassword.type === 'password' ? 'text' : 'password';
+                mobilePassword.type = type;
+                mobileTogglePassword.classList.toggle('fa-lock');
+                mobileTogglePassword.classList.toggle('fa-unlock-alt');
+            });
+        }
+
+        if (mobileToggleConfirm) {
+            mobileToggleConfirm.addEventListener('click', () => {
+                const type = mobileConfirm.type === 'password' ? 'text' : 'password';
+                mobileConfirm.type = type;
+                mobileToggleConfirm.classList.toggle('fa-check-circle');
+                mobileToggleConfirm.classList.toggle('fa-eye-slash');
+            });
+        }
 
         mobileForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const username = mobileUsername.value.trim();
             const email = mobileEmail.value.trim();
-            const password = mobilePassword.value.trim();
+            const password = mobilePassword.value;
+            const confirm = mobileConfirm.value;
 
+            if (!username || !email || !password || !confirm) {
+                showToast('❌ يرجى ملء جميع الحقول', true);
+                return;
+            }
+            if (username.length < 3) {
+                showToast('👤 اسم المستخدم يجب أن يكون 3 أحرف على الأقل', true);
+                return;
+            }
             if (!email.includes('@')) {
-                showToast('الرجاء إدخال بريد إلكتروني صحيح', true);
+                showToast('📧 البريد الإلكتروني غير صالح', true);
                 return;
             }
             if (password.length < 6) {
-                showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
+                showToast('🔒 كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
+                return;
+            }
+            if (password !== confirm) {
+                showToast('❌ كلمة المرور غير متطابقة', true);
                 return;
             }
 
-            mobileLoginBtn.disabled = true;
-            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> جاري الدخول...';
+            mobileSubmitBtn.disabled = true;
+            mobileSubmitBtn.innerHTML = '<div class="loading-spinner"></div> جاري إنشاء الحساب...';
 
             try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                if (mobileRemember.checked) {
-                    localStorage.setItem('rememberedEmail', email);
-                }
-                showWelcomeScreen(userCredential.user);
-                showToast('تم تسجيل الدخول بنجاح!');
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({ displayName: username });
+                showToast(`✨ مرحباً ${username}! تم إنشاء حسابك بنجاح`);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             } catch (error) {
-                if (error.code === 'auth/user-not-found') {
-                    showToast('لا يوجد حساب بهذا البريد', true);
-                } else if (error.code === 'auth/wrong-password') {
-                    showToast('كلمة المرور غير صحيحة', true);
-                } else {
-                    showToast(error.message, true);
+                let errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = '⚠️ البريد الإلكتروني مسجل مسبقاً';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = '📧 البريد الإلكتروني غير صالح';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = '🔒 كلمة المرور ضعيفة جداً';
                 }
+                showToast(errorMessage, true);
             } finally {
-                mobileLoginBtn.disabled = false;
-                mobileLoginBtn.innerHTML = '<span>تسجيل الدخول</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                mobileSubmitBtn.disabled = false;
+                mobileSubmitBtn.innerHTML = '<span>إنشاء حساب</span><i class="fas fa-arrow-left"></i>';
             }
         });
 
-        // Google Sign-In
+        // ========== Google Sign-In ==========
         async function googleSignIn() {
             const provider = new firebase.auth.GoogleAuthProvider();
-            provider.setCustomParameters({ prompt: 'select_account' });
             try {
                 const result = await auth.signInWithPopup(provider);
                 showWelcomeScreen(result.user);
                 showToast('تم تسجيل الدخول بنجاح عبر Google!');
             } catch (error) {
-                if (error.code === 'auth/popup-blocked') {
-                    showToast('الرجاء السماح للنوافذ المنبثقة', true);
-                } else {
-                    showToast(error.message, true);
-                }
+                showToast(error.message, true);
             }
         }
 
         document.getElementById('googleBtn')?.addEventListener('click', googleSignIn);
-        document.getElementById('mobileGoogleBtn')?.addEventListener('click', googleSignIn);
 
-        // GitHub Sign-In
+        // ========== GitHub Sign-In ==========
         async function githubSignIn() {
             const provider = new firebase.auth.GithubAuthProvider();
             try {
@@ -934,18 +1004,13 @@
                 showWelcomeScreen(result.user);
                 showToast('تم تسجيل الدخول بنجاح عبر GitHub!');
             } catch (error) {
-                if (error.code === 'auth/popup-blocked') {
-                    showToast('الرجاء السماح للنوافذ المنبثقة', true);
-                } else {
-                    showToast(error.message, true);
-                }
+                showToast(error.message, true);
             }
         }
 
         document.getElementById('githubBtn')?.addEventListener('click', githubSignIn);
-        document.getElementById('mobileGithubBtn')?.addEventListener('click', githubSignIn);
 
-        // Forgot Password
+        // ========== Forgot Password ==========
         async function handleForgotPassword() {
             const email = prompt('الرجاء إدخال بريدك الإلكتروني:');
             if (email && email.includes('@')) {
@@ -964,9 +1029,16 @@
             e.preventDefault();
             handleForgotPassword();
         });
-        document.getElementById('mobileForgotPassword')?.addEventListener('click', (e) => {
+
+        // ========== Redirects ==========
+        document.getElementById('signupRedirectDesktop')?.addEventListener('click', (e) => {
             e.preventDefault();
-            handleForgotPassword();
+            alert('يمكنك إنشاء حساب جديد من خلال الهاتف المحمول، أو قم بتصغير حجم المتصفح لعرض نموذج إنشاء الحساب');
+        });
+
+        document.getElementById('loginRedirectMobile')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('يتم تسجيل الدخول من خلال شاشة الكمبيوتر، أو قم بتكبير حجم المتصفح');
         });
 
         logoutBtn.addEventListener('click', logout);
