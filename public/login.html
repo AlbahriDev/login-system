@@ -858,11 +858,32 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             }, 3000);
         }
 
-    function showWelcomeScreen(user) {
+  function showWelcomeScreen(user) {
     // 1. محاولة جلب الاسم من عدة مصادر
-    let displayName = user.displayName || 
-                      (user.providerData && user.providerData[0] && user.providerData[0].displayName) || 
-                      (user.email ? user.email.split("@")[0] : "مستخدم");
+    let displayName = "مستخدم";
+    
+    // حاول جلب الاسم من GitHub أولاً
+    if (user.displayName) {
+        displayName = user.displayName;
+    } 
+    // إذا كان المستخدم من GitHub، حاول جلب الاسم من providerData
+    else if (user.providerData && user.providerData[0]) {
+        const provider = user.providerData[0];
+        if (provider.displayName) {
+            displayName = provider.displayName;
+        }
+        // إذا كان GitHub ولم يرسل اسم، استخدم أول جزء من البريد
+        else if (provider.providerId === 'github.com' && provider.email) {
+            displayName = provider.email.split("@")[0];
+        }
+        else if (provider.email) {
+            displayName = provider.email.split("@")[0];
+        }
+    }
+    // إذا كان هناك بريد إلكتروني، استخدم اسم البريد
+    else if (user.email) {
+        displayName = user.email.split("@")[0];
+    }
 
     // 2. محاولة جلب البريد من عدة مصادر
     let email = user.email || 
