@@ -10,6 +10,10 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
     <style>
         * {
@@ -23,9 +27,6 @@
             min-height: 100vh;
         }
 
-        /* ========================================
-           تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
-           ======================================== */
         .desktop-layout {
             display: flex;
             min-height: 100vh;
@@ -144,7 +145,6 @@
             font-size: 0.9rem;
         }
 
-        /* تصميم الحقول */
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
@@ -322,9 +322,7 @@
             font-weight: 700;
         }
 
-        /* ========================================
-           تصميم الهاتف - Plantland Style (تسجيل الدخول)
-           ======================================== */
+        /* Mobile Layout */
         .mobile-layout {
             display: none;
             min-height: 100vh;
@@ -439,18 +437,18 @@
         }
 
         .mobile-card {
-    position: relative;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border-radius: 2rem;
-    margin: 1rem;  /* كانت 2rem 1.5rem - قللناها */
-    padding: 2rem 1.5rem;  /* زدنا padding */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: calc(100% - 2rem);  /* أضف هذا السطر */
-    max-width: 400px;  /* أضف هذا السطر لجعلها أكبر */
-}
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            margin: 1rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: calc(100% - 2rem);
+            max-width: 400px;
+        }
 
         .mobile-logo {
             width: 70px;
@@ -481,7 +479,6 @@
             margin-bottom: 2rem;
         }
 
-        /* أزرار الهاتف */
         .mobile-login-btn {
             width: 100%;
             padding: 0.9rem;
@@ -498,11 +495,6 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-        }
-
-        .mobile-login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
         }
 
         .mobile-login-btn:disabled {
@@ -535,7 +527,100 @@
             font-weight: 700;
         }
 
-        /* شاشة الترحيب */
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 4px;
+            font-size: 1.3rem;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .modal-btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
         .welcome-screen {
             position: fixed;
             inset: 0;
@@ -623,13 +708,11 @@
             to { transform: rotate(360deg); }
         }
 
-        /* شاشة الهاتف (تحت 768px) */
         @media (max-width: 768px) {
             .desktop-layout { display: none; }
             .mobile-layout { display: flex; align-items: center; justify-content: center; }
         }
 
-        /* شاشة الكمبيوتر (فوق 768px) */
         @media (min-width: 769px) {
             .desktop-layout { display: flex; }
             .mobile-layout { display: none; }
@@ -638,9 +721,6 @@
 </head>
 <body>
 
-    <!-- ========================================
-         تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
-    ======================================== -->
     <div class="desktop-layout">
         <div class="hero-section">
             <div class="bg-circle-1"></div>
@@ -715,9 +795,6 @@
         </div>
     </div>
 
-    <!-- ========================================
-         تصميم الهاتف - Plantland Style (تسجيل الدخول)
-    ======================================== -->
     <div class="mobile-layout">
         <div class="mobile-bg">
             <div class="tree">
@@ -770,7 +847,34 @@
         </div>
     </div>
 
-    <!-- شاشة الترحيب -->
+    <!-- Modal for OTP Verification -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <h3>🔐 تحقق من البريد الإلكتروني</h3>
+            <p>تم إرسال كود التحقق إلى بريدك الإلكتروني. الرجاء إدخال الكود أدناه:</p>
+            <input type="text" class="modal-input" id="otpCode" placeholder="_ _ _ _ _ _" maxlength="6" autocomplete="off">
+            <p style="font-size: 0.8rem; color: #94a3b8;">الكود مكون من 6 أرقام</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" id="cancelOtpBtn">إلغاء</button>
+                <button class="modal-btn modal-btn-primary" id="verifyOtpBtn">تحقق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Password -->
+    <div class="modal" id="newPasswordModal">
+        <div class="modal-content">
+            <h3>🔑 تعيين كلمة مرور جديدة</h3>
+            <p>الرجاء إدخال كلمة المرور الجديدة:</p>
+            <input type="password" class="modal-input" id="newPassword" placeholder="كلمة المرور الجديدة" autocomplete="off">
+            <input type="password" class="modal-input" id="confirmPassword" placeholder="تأكيد كلمة المرور" autocomplete="off">
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" id="cancelPasswordBtn">إلغاء</button>
+                <button class="modal-btn modal-btn-primary" id="resetPasswordBtn">تغيير كلمة المرور</button>
+            </div>
+        </div>
+    </div>
+
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-content">
             <div class="hero-logo" style="margin: 0 auto 1rem;">
@@ -800,17 +904,21 @@
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const database = firebase.database();
 
-        // Elements
+        // EmailJS Configuration (سجل مجاناً على emailjs.com واستبدل هذه المفاتيح)
+        emailjs.init("YOUR_PUBLIC_KEY"); // استبدل بمفتاحك العام من EmailJS
+
         const toast = document.getElementById('toastMsg');
         const welcomeScreen = document.getElementById('welcomeScreen');
         const welcomeName = document.getElementById('welcomeName');
-        const welcomeMessage = document.getElementById('welcomeMessage');
         const userEmailDisplay = document.getElementById('userEmailDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
 
-        let toastTimeout;
+        let currentResetEmail = null;
+        let currentResetCode = null;
 
+        let toastTimeout;
         function showToast(message, isError = false) {
             clearTimeout(toastTimeout);
             toast.textContent = message;
@@ -836,30 +944,183 @@
                 await auth.signOut();
                 hideWelcomeScreen();
                 showToast('تم تسجيل الخروج بنجاح');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500);
+                setTimeout(() => window.location.reload(), 500);
             } catch (error) {
                 showToast('حدث خطأ: ' + error.message, true);
             }
         }
 
-        // ========== Desktop Login ==========
+        // توليد كود عشوائي مكون من 6 أرقام
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // إرسال الكود عبر البريد باستخدام EmailJS
+        async function sendOTPEmail(email, otpCode) {
+            // ملاحظة: يجب إنشاء خدمة email وإعداد template في EmailJS
+            // هذا مثال توضيحي - ستحتاج للتسجيل في EmailJS والحصول على Service ID و Template ID
+            const templateParams = {
+                to_email: email,
+                otp_code: otpCode,
+                subject: "كود استعادة كلمة المرور - Rento",
+                message: `كود التحقق الخاص بك هو: ${otpCode}\n\nالرجاء استخدام هذا الكود لإعادة تعيين كلمة المرور الخاصة بك. الكود صالح لمدة 5 دقائق فقط.`
+            };
+            
+            try {
+                await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams);
+                return true;
+            } catch (error) {
+                console.error("Email send error:", error);
+                return false;
+            }
+        }
+
+        // حفظ الكود في Firebase Database مع وقت انتهاء الصلاحية
+        async function saveOTPCode(email, code) {
+            const expiresAt = Date.now() + 5 * 60 * 1000; // 5 دقائق
+            await database.ref('passwordResetCodes/' + email.replace(/\./g, '_')).set({
+                code: code,
+                expiresAt: expiresAt,
+                email: email
+            });
+        }
+
+        // التحقق من صحة الكود
+        async function verifyOTPCode(email, enteredCode) {
+            const snapshot = await database.ref('passwordResetCodes/' + email.replace(/\./g, '_')).get();
+            if (!snapshot.exists()) {
+                return { valid: false, message: 'لا يوجد طلب إعادة تعيين لهذا البريد' };
+            }
+            const data = snapshot.val();
+            if (Date.now() > data.expiresAt) {
+                await database.ref('passwordResetCodes/' + email.replace(/\./g, '_')).remove();
+                return { valid: false, message: 'انتهت صلاحية الكود، الرجاء طلب كود جديد' };
+            }
+            if (data.code === enteredCode) {
+                return { valid: true, message: 'الكود صحيح' };
+            }
+            return { valid: false, message: 'الكود غير صحيح' };
+        }
+
+        // حذف الكود بعد الاستخدام
+        async function deleteOTPCode(email) {
+            await database.ref('passwordResetCodes/' + email.replace(/\./g, '_')).remove();
+        }
+
+        // دالة إعادة تعيين كلمة المرور
+        async function resetPassword(email, newPassword) {
+            try {
+                // إرسال رابط إعادة تعيين (هذه هي الطريقة الآمنة من Firebase)
+                // أو يمكن استخدام تحديث كلمة المرور إذا كان المستخدم مسجل دخول
+                // لكن هنا سنستخدم sendPasswordResetEmail
+                await auth.sendPasswordResetEmail(email);
+                showToast(`تم إرسال رابط إعادة تعيين كلمة المرور إلى ${email}`);
+                return true;
+            } catch (error) {
+                showToast(error.message, true);
+                return false;
+            }
+        }
+
+        // نافذة إدخال البريد الإلكتروني وطلب الكود
+        async function requestPasswordReset(isDesktop = true) {
+            const email = prompt(isDesktop ? 'الرجاء إدخال بريدك الإلكتروني:' : 'Please enter your email address:');
+            if (!email) return;
+            
+            if (!email.includes('@')) {
+                showToast(isDesktop ? 'الرجاء إدخال بريد إلكتروني صحيح' : 'Please enter a valid email', true);
+                return;
+            }
+
+            // التحقق من وجود المستخدم في Firebase Auth
+            try {
+                // محاولة إرسال رابط إعادة تعيين للتحقق من وجود البريد
+                await auth.sendPasswordResetEmail(email);
+                
+                // توليد كود وحفظه
+                const otpCode = generateOTP();
+                currentResetEmail = email;
+                currentResetCode = otpCode;
+                
+                await saveOTPCode(email, otpCode);
+                
+                // محاولة إرسال الكود عبر البريد
+                const emailSent = await sendOTPEmail(email, otpCode);
+                
+                if (emailSent) {
+                    showToast(`تم إرسال الكود إلى ${email}. الرجاء التحقق من بريدك.`);
+                    // فتح النافذة المنبثقة لإدخال الكود
+                    document.getElementById('otpModal').classList.add('active');
+                } else {
+                    // إذا فشل إرسال البريد، اعرض الكود في رسالة (للتجربة)
+                    showToast(`⚠️ لم يتم إرسال البريد. كود التحقق للتجربة: ${otpCode}`, true);
+                    document.getElementById('otpModal').classList.add('active');
+                }
+            } catch (error) {
+                if (error.code === 'auth/user-not-found') {
+                    showToast(isDesktop ? 'لا يوجد حساب مسجل بهذا البريد الإلكتروني' : 'No account found with this email', true);
+                } else {
+                    showToast(error.message, true);
+                }
+            }
+        }
+
+        // التحقق من الكود
+        async function verifyCode() {
+            const enteredCode = document.getElementById('otpCode').value.trim();
+            if (!enteredCode || enteredCode.length !== 6) {
+                showToast('الرجاء إدخال الكود المكون من 6 أرقام', true);
+                return;
+            }
+            
+            const result = await verifyOTPCode(currentResetEmail, enteredCode);
+            if (result.valid) {
+                // إغلاق نافذة الكود
+                document.getElementById('otpModal').classList.remove('active');
+                document.getElementById('otpCode').value = '';
+                // فتح نافذة كلمة المرور الجديدة
+                document.getElementById('newPasswordModal').classList.add('active');
+            } else {
+                showToast(result.message, true);
+            }
+        }
+
+        // إعادة تعيين كلمة المرور بعد التحقق
+        async function handleResetPassword() {
+            const newPassword = document.getElementById('newPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+            
+            if (newPassword.length < 6) {
+                showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                showToast('كلمة المرور وتأكيدها غير متطابقين', true);
+                return;
+            }
+            
+            await resetPassword(currentResetEmail, newPassword);
+            
+            // تنظيف
+            await deleteOTPCode(currentResetEmail);
+            document.getElementById('newPasswordModal').classList.remove('active');
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            currentResetEmail = null;
+            currentResetCode = null;
+        }
+
+        // Desktop Login
         const desktopForm = document.getElementById('loginForm');
         const desktopEmail = document.getElementById('email');
         const desktopPassword = document.getElementById('password');
         const desktopRemember = document.getElementById('rememberCheck');
         const desktopLoginBtn = document.getElementById('loginBtn');
 
-        const togglePassword = document.getElementById('togglePassword');
-        if (togglePassword) {
-            togglePassword.addEventListener('click', () => {
-                const type = desktopPassword.type === 'password' ? 'text' : 'password';
-                desktopPassword.type = type;
-                togglePassword.classList.toggle('fa-lock');
-                togglePassword.classList.toggle('fa-unlock-alt');
-            });
-        }
+        document.getElementById('togglePassword')?.addEventListener('click', () => {
+            const type = desktopPassword.type === 'password' ? 'text' : 'password';
+            desktopPassword.type = type;
+        });
 
         if (localStorage.getItem('rememberedEmail')) {
             desktopEmail.value = localStorage.getItem('rememberedEmail');
@@ -906,21 +1167,16 @@
             }
         });
 
-        // ========== Mobile Login ==========
+        // Mobile Login
         const mobileForm = document.getElementById('mobileLoginForm');
         const mobileEmail = document.getElementById('mobileEmail');
         const mobilePassword = document.getElementById('mobilePassword');
         const mobileLoginBtn = document.getElementById('mobileLoginBtn');
 
-        const mobileTogglePassword = document.getElementById('mobileTogglePassword');
-        if (mobileTogglePassword) {
-            mobileTogglePassword.addEventListener('click', () => {
-                const type = mobilePassword.type === 'password' ? 'text' : 'password';
-                mobilePassword.type = type;
-                mobileTogglePassword.classList.toggle('fa-lock');
-                mobileTogglePassword.classList.toggle('fa-unlock-alt');
-            });
-        }
+        document.getElementById('mobileTogglePassword')?.addEventListener('click', () => {
+            const type = mobilePassword.type === 'password' ? 'text' : 'password';
+            mobilePassword.type = type;
+        });
 
         mobileForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -957,7 +1213,7 @@
             }
         });
 
-        // ========== Google Sign-In (Desktop) ==========
+        // Google & GitHub Sign-In
         async function googleSignIn() {
             const provider = new firebase.auth.GoogleAuthProvider();
             try {
@@ -968,10 +1224,8 @@
                 showToast(error.message, true);
             }
         }
-
         document.getElementById('googleBtn')?.addEventListener('click', googleSignIn);
 
-        // ========== GitHub Sign-In (Desktop) ==========
         async function githubSignIn() {
             const provider = new firebase.auth.GithubAuthProvider();
             try {
@@ -982,35 +1236,36 @@
                 showToast(error.message, true);
             }
         }
-
         document.getElementById('githubBtn')?.addEventListener('click', githubSignIn);
 
-        // ========== Forgot Password (Desktop & Mobile) ==========
-        async function handleForgotPassword(isDesktop = true) {
-            const email = prompt(isDesktop ? 'الرجاء إدخال بريدك الإلكتروني:' : 'Please enter your email address:');
-            if (email && email.includes('@')) {
-                try {
-                    await auth.sendPasswordResetEmail(email);
-                    showToast(isDesktop ? `تم إرسال رابط استعادة كلمة المرور إلى ${email}` : `Password reset link sent to ${email}`);
-                } catch (error) {
-                    showToast(error.message, true);
-                }
-            } else if (email) {
-                showToast(isDesktop ? 'الرجاء إدخال بريد إلكتروني صحيح' : 'Please enter a valid email', true);
-            }
-        }
-
+        // Forgot Password Handlers
         document.getElementById('forgotPassword')?.addEventListener('click', (e) => {
             e.preventDefault();
-            handleForgotPassword(true);
+            requestPasswordReset(true);
         });
 
         document.getElementById('mobileForgotBtn')?.addEventListener('click', (e) => {
             e.preventDefault();
-            handleForgotPassword(false);
+            requestPasswordReset(false);
         });
 
-        // ========== Redirects ==========
+        // Modal Event Listeners
+        document.getElementById('cancelOtpBtn')?.addEventListener('click', () => {
+            document.getElementById('otpModal').classList.remove('active');
+            document.getElementById('otpCode').value = '';
+        });
+        
+        document.getElementById('verifyOtpBtn')?.addEventListener('click', verifyCode);
+        
+        document.getElementById('cancelPasswordBtn')?.addEventListener('click', () => {
+            document.getElementById('newPasswordModal').classList.remove('active');
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        });
+        
+        document.getElementById('resetPasswordBtn')?.addEventListener('click', handleResetPassword);
+
+        // Redirects
         document.getElementById('signupRedirectDesktop')?.addEventListener('click', (e) => {
             e.preventDefault();
             window.location.href = 'signup.html';
@@ -1026,6 +1281,19 @@
         auth.onAuthStateChanged((user) => {
             if (user) {
                 showWelcomeScreen(user);
+            }
+        });
+
+        // إغلاق المودال عند الضغط خارج المحتوى
+        document.getElementById('otpModal')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('otpModal')) {
+                document.getElementById('otpModal').classList.remove('active');
+            }
+        });
+        
+        document.getElementById('newPasswordModal')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('newPasswordModal')) {
+                document.getElementById('newPasswordModal').classList.remove('active');
             }
         });
     </script>
