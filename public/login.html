@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title> تسجيل الدخول</title>
+    <title>تسجيل الدخول - التحقق من المستخدم</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js?hl=ar" async defer></script>
     
     <style>
         * {
@@ -24,7 +27,7 @@
         }
 
         /* ========================================
-           تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
+           تصميم الكمبيوتر
            ======================================== */
         .desktop-layout {
             display: flex;
@@ -33,56 +36,54 @@
         }
 
         .hero-section {
-    flex: 1;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 3rem;
-}
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 3rem;
+        }
 
-/* طبقة الخلفية بالصورة مع بلور */
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&h=800&fit=crop'); /* صورة كرت مهني */
-    background-size: cover;
-    background-position: center;
-    filter: blur(4px);
-    transform: scale(1.05);
-    z-index: 0;
-}
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&h=800&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            transform: scale(1.05);
+            z-index: 0;
+        }
 
-/* طبقة اللون الأزرق الشفاف فوق الصورة */
-.hero-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(10, 10, 42, 0.7); /* نفس اللون الأزرق بتدرج شفاف */
-    z-index: 1;
-}
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 42, 0.7);
+            z-index: 1;
+        }
 
-.hero-section .bg-circle-1,
-.hero-section .bg-circle-2 {
-    z-index: 2;
-}
+        .hero-section .bg-circle-1,
+        .hero-section .bg-circle-2 {
+            z-index: 2;
+        }
 
-.hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    color: white;
-    max-width: 400px;
-}
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 400px;
+        }
 
         .hero-section .bg-circle-1 {
             position: absolute;
@@ -114,14 +115,6 @@
         @keyframes float2 {
             0%, 100% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(-40px, 20px) scale(1.2); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-            max-width: 400px;
         }
 
         .hero-logo {
@@ -184,7 +177,6 @@
             font-size: 0.9rem;
         }
 
-        /* تصميم الحقول */
         .input-group {
             position: relative;
             margin-bottom: 1.5rem;
@@ -249,6 +241,14 @@
             color: transparent;
         }
 
+        /* حقل reCAPTCHA */
+        .captcha-container {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            transform: scale(0.9);
+        }
+
         .options {
             display: flex;
             justify-content: space-between;
@@ -278,27 +278,34 @@
         }
 
         .login-btn {
-    width: 100%;
-    padding: 0.9rem;
-    background: linear-gradient(135deg, #2e7d32, #43a047);
-    border: none;
-    border-radius: 1rem;
-    color: white;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
 
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
-}
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .divider {
             display: flex;
             align-items: center;
@@ -362,7 +369,7 @@
         }
 
         /* ========================================
-           تصميم الهاتف - Plantland Style (تسجيل الدخول)
+           تصميم الهاتف
            ======================================== */
         .mobile-layout {
             display: none;
@@ -478,18 +485,18 @@
         }
 
         .mobile-card {
-    position: relative;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border-radius: 2rem;
-    margin: 1rem;  /* كانت 2rem 1.5rem - قللناها */
-    padding: 2rem 1.5rem;  /* زدنا padding */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: calc(100% - 2rem);  /* أضف هذا السطر */
-    max-width: 400px;  /* أضف هذا السطر لجعلها أكبر */
-}
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            margin: 1rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: calc(100% - 2rem);
+            max-width: 400px;
+        }
 
         .mobile-logo {
             width: 70px;
@@ -520,7 +527,6 @@
             margin-bottom: 2rem;
         }
 
-        /* أزرار الهاتف */
         .mobile-login-btn {
             width: 100%;
             padding: 0.9rem;
@@ -574,7 +580,6 @@
             font-weight: 700;
         }
 
-        /* شاشة الترحيب */
         .welcome-screen {
             position: fixed;
             inset: 0;
@@ -662,13 +667,34 @@
             to { transform: rotate(360deg); }
         }
 
-        /* شاشة الهاتف (تحت 768px) */
+        /* حالة تعطيل حقول البريد وكلمة المرور فقط قبل التحقق */
+        .input-group.disabled-input input {
+            background: #f1f5f9;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .input-group.disabled-input .icon {
+            opacity: 0.5;
+        }
+
+        .captcha-status {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #10b981;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .captcha-status.show {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .desktop-layout { display: none; }
             .mobile-layout { display: flex; align-items: center; justify-content: center; }
         }
 
-        /* شاشة الكمبيوتر (فوق 768px) */
         @media (min-width: 769px) {
             .desktop-layout { display: flex; }
             .mobile-layout { display: none; }
@@ -677,51 +703,53 @@
 </head>
 <body>
 
-    <!-- ========================================
-         تصميم الكمبيوتر - Rento Style (تسجيل الدخول)
-    ======================================== -->
+    <!-- تصميم الكمبيوتر -->
     <div class="desktop-layout">
         <div class="hero-section">
             <div class="bg-circle-1"></div>
             <div class="bg-circle-2"></div>
             <div class="hero-content">
-                <div class="hero-content">
-    <!-- تم حذف المحتوى -->
-</div>
                 
-                <!-- <p>منصة متكاملة لإدارة أعمالك<br>بكل سهولة واحترافية</p> -->
             </div>
         </div>
 
         <div class="form-section">
             <div class="form-container">
                 <div class="form-header">
-                    <h2>مرحباً بك</h2>
-                    <p>سجل دخولك للمتابعة إلى حسابك</p>
+                    <h2>تسجيل الدخول</h2>
+                    <p>تحقق من هويتك أولاً ثم أدخل بياناتك</p>
+                </div>
+
+                <!-- حقل reCAPTCHA - يظهر أولاً -->
+                <div class="captcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="onCaptchaSuccess" data-expired-callback="onCaptchaExpired"></div>
+                </div>
+                <div class="captcha-status" id="captchaStatusDesktop">
+                    <i class="fas fa-check-circle"></i> تم التحقق بنجاح
                 </div>
 
                 <form id="loginForm">
-                    <div class="input-group">
-                        <input type="email" id="email" placeholder=" " required>
+                    <div class="input-group disabled-input" id="desktopEmailGroup">
+                        <input type="email" id="email" placeholder=" " disabled required>
                         <label>البريد الإلكتروني</label>
                         <i class="fas fa-envelope icon"></i>
                     </div>
 
-                    <div class="input-group">
-                        <input type="password" id="password" placeholder=" " required>
+                    <div class="input-group disabled-input" id="desktopPasswordGroup">
+                        <input type="password" id="password" placeholder=" " disabled required>
                         <label>كلمة المرور</label>
                         <i class="fas fa-lock icon" id="togglePassword" style="cursor: pointer;"></i>
                     </div>
 
                     <div class="options">
                         <label class="remember">
-                            <input type="checkbox" id="rememberCheck">
+                            <input type="checkbox" id="rememberCheck" disabled>
                             <span>تذكر بياناتي</span>
                         </label>
                         <a href="#" class="forgot" id="forgotPassword">نسيت كلمة المرور؟</a>
                     </div>
 
-                    <button type="submit" class="login-btn" id="loginBtn">
+                    <button type="submit" class="login-btn" id="loginBtn" disabled>
                         <span>تسجيل الدخول</span>
                         <i class="fas fa-arrow-left"></i>
                     </button>
@@ -752,9 +780,7 @@
         </div>
     </div>
 
-    <!-- ========================================
-         تصميم الهاتف - Plantland Style (تسجيل الدخول)
-    ======================================== -->
+    <!-- تصميم الهاتف -->
     <div class="mobile-layout">
         <div class="mobile-bg">
             <div class="tree">
@@ -775,31 +801,36 @@
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <h1>Hello!</h1>
-            <p class="subtitle">Welcome to plantland</p>
+            <h1>مرحباً!</h1>
+            <p class="subtitle">قم بالتحقق أولاً</p>
+
+            <div class="captcha-container">
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="onMobileCaptchaSuccess" data-expired-callback="onMobileCaptchaExpired"></div>
+            </div>
+            <div class="captcha-status" id="captchaStatusMobile">
+                <i class="fas fa-check-circle"></i> تم التحقق بنجاح
+            </div>
 
             <form id="mobileLoginForm">
-                <div class="input-group">
-                    <input type="email" id="mobileEmail" placeholder=" " required>
-                    <label>Email Address</label>
+                <div class="input-group disabled-input" id="mobileEmailGroup">
+                    <input type="email" id="mobileEmail" placeholder=" " disabled required>
+                    <label>البريد الإلكتروني</label>
                     <i class="fas fa-envelope icon"></i>
                 </div>
 
-                <div class="input-group">
-                    <input type="password" id="mobilePassword" placeholder=" " required>
-                    <label>Password</label>
+                <div class="input-group disabled-input" id="mobilePasswordGroup">
+                    <input type="password" id="mobilePassword" placeholder=" " disabled required>
+                    <label>كلمة المرور</label>
                     <i class="fas fa-lock icon" id="mobileTogglePassword" style="cursor: pointer;"></i>
                 </div>
 
-                <button type="submit" class="mobile-login-btn" id="mobileLoginBtn">
-                    <span>Login</span>
+                <button type="submit" class="mobile-login-btn" id="mobileLoginBtn" disabled>
+                    <span>تسجيل الدخول</span>
                     <i class="fas fa-arrow-left"></i>
                 </button>
 
-                
-
                 <div class="mobile-signup-link">
-                    Don't have an account? <a href="#" id="mobileSignupLink">Sign Up</a>
+                    ليس لديك حساب؟ <a href="#" id="mobileSignupLink">إنشاء حساب</a>
                 </div>
             </form>
         </div>
@@ -835,8 +866,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        // تفعيل تذكر الجلسة بشكل دائم
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         // Elements
         const toast = document.getElementById('toastMsg');
@@ -847,6 +877,8 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         const logoutBtn = document.getElementById('logoutBtn');
 
         let toastTimeout;
+        let isCaptchaVerifiedDesktop = false;
+        let isCaptchaVerifiedMobile = false;
 
         function showToast(message, isError = false) {
             clearTimeout(toastTimeout);
@@ -858,43 +890,127 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             }, 3000);
         }
 
-  function showWelcomeScreen(user) {
-    // 1. محاولة جلب الاسم من عدة مصادر
-    let displayName = "مستخدم";
-    
-    // حاول جلب الاسم من GitHub أولاً
-    if (user.displayName) {
-        displayName = user.displayName;
-    } 
-    // إذا كان المستخدم من GitHub، حاول جلب الاسم من providerData
-    else if (user.providerData && user.providerData[0]) {
-        const provider = user.providerData[0];
-        if (provider.displayName) {
-            displayName = provider.displayName;
+        // تفعيل حقول البريد وكلمة المرور فقط (بدون أزرار جوجل وجيت هاب)
+        function enableDesktopForm() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const rememberCheck = document.getElementById('rememberCheck');
+            const loginBtn = document.getElementById('loginBtn');
+            const emailGroup = document.getElementById('desktopEmailGroup');
+            const passwordGroup = document.getElementById('desktopPasswordGroup');
+            
+            emailInput.disabled = false;
+            passwordInput.disabled = false;
+            rememberCheck.disabled = false;
+            loginBtn.disabled = false;
+            
+            emailGroup.classList.remove('disabled-input');
+            passwordGroup.classList.remove('disabled-input');
         }
-        // إذا كان GitHub ولم يرسل اسم، استخدم أول جزء من البريد
-        else if (provider.providerId === 'github.com' && provider.email) {
-            displayName = provider.email.split("@")[0];
-        }
-        else if (provider.email) {
-            displayName = provider.email.split("@")[0];
-        }
-    }
-    // إذا كان هناك بريد إلكتروني، استخدم اسم البريد
-    else if (user.email) {
-        displayName = user.email.split("@")[0];
-    }
 
-    // 2. محاولة جلب البريد من عدة مصادر
-    let email = user.email || 
-                (user.providerData && user.providerData[0] && user.providerData[0].email) || 
-                "بريد إلكتروني غير متوفر";
+        function disableDesktopForm() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const rememberCheck = document.getElementById('rememberCheck');
+            const loginBtn = document.getElementById('loginBtn');
+            const emailGroup = document.getElementById('desktopEmailGroup');
+            const passwordGroup = document.getElementById('desktopPasswordGroup');
+            
+            emailInput.disabled = true;
+            passwordInput.disabled = true;
+            rememberCheck.disabled = true;
+            loginBtn.disabled = true;
+            
+            emailGroup.classList.add('disabled-input');
+            passwordGroup.classList.add('disabled-input');
+        }
 
-    // تحديث الواجهة
-    welcomeName.textContent = `مرحباً، ${displayName}`;
-    userEmailDisplay.textContent = email;
-    welcomeScreen.classList.add("active");
-}
+        function enableMobileForm() {
+            const emailInput = document.getElementById('mobileEmail');
+            const passwordInput = document.getElementById('mobilePassword');
+            const loginBtn = document.getElementById('mobileLoginBtn');
+            const emailGroup = document.getElementById('mobileEmailGroup');
+            const passwordGroup = document.getElementById('mobilePasswordGroup');
+            
+            emailInput.disabled = false;
+            passwordInput.disabled = false;
+            loginBtn.disabled = false;
+            
+            emailGroup.classList.remove('disabled-input');
+            passwordGroup.classList.remove('disabled-input');
+        }
+
+        function disableMobileForm() {
+            const emailInput = document.getElementById('mobileEmail');
+            const passwordInput = document.getElementById('mobilePassword');
+            const loginBtn = document.getElementById('mobileLoginBtn');
+            const emailGroup = document.getElementById('mobileEmailGroup');
+            const passwordGroup = document.getElementById('mobilePasswordGroup');
+            
+            emailInput.disabled = true;
+            passwordInput.disabled = true;
+            loginBtn.disabled = true;
+            
+            emailGroup.classList.add('disabled-input');
+            passwordGroup.classList.add('disabled-input');
+        }
+
+        // Desktop reCAPTCHA callbacks
+        window.onCaptchaSuccess = function() {
+            isCaptchaVerifiedDesktop = true;
+            document.getElementById('captchaStatusDesktop').classList.add('show');
+            enableDesktopForm();
+            showToast('تم التحقق بنجاح! يمكنك الآن إدخال بياناتك');
+        };
+        
+        window.onCaptchaExpired = function() {
+            isCaptchaVerifiedDesktop = false;
+            document.getElementById('captchaStatusDesktop').classList.remove('show');
+            disableDesktopForm();
+            showToast('انتهت صلاحية التحقق، يرجى إعادة التحقق', true);
+        };
+        
+        // Mobile reCAPTCHA callbacks
+        window.onMobileCaptchaSuccess = function() {
+            isCaptchaVerifiedMobile = true;
+            document.getElementById('captchaStatusMobile').classList.add('show');
+            enableMobileForm();
+            showToast('تم التحقق بنجاح! يمكنك الآن إدخال بياناتك');
+        };
+        
+        window.onMobileCaptchaExpired = function() {
+            isCaptchaVerifiedMobile = false;
+            document.getElementById('captchaStatusMobile').classList.remove('show');
+            disableMobileForm();
+            showToast('انتهت صلاحية التحقق، يرجى إعادة التحقق', true);
+        };
+
+        function showWelcomeScreen(user) {
+            let displayName = "مستخدم";
+            if (user.displayName) {
+                displayName = user.displayName;
+            } else if (user.providerData && user.providerData[0]) {
+                const provider = user.providerData[0];
+                if (provider.displayName) {
+                    displayName = provider.displayName;
+                } else if (provider.providerId === 'github.com' && provider.email) {
+                    displayName = provider.email.split("@")[0];
+                } else if (provider.email) {
+                    displayName = provider.email.split("@")[0];
+                }
+            } else if (user.email) {
+                displayName = user.email.split("@")[0];
+            }
+
+            let email = user.email || 
+                        (user.providerData && user.providerData[0] && user.providerData[0].email) || 
+                        "بريد إلكتروني غير متوفر";
+
+            welcomeName.textContent = `مرحباً، ${displayName}`;
+            userEmailDisplay.textContent = email;
+            welcomeScreen.classList.add("active");
+        }
+        
         function hideWelcomeScreen() {
             welcomeScreen.classList.remove('active');
         }
@@ -912,7 +1028,7 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             }
         }
 
-        // ========== Desktop Login ==========
+        // Desktop Login (البريد وكلمة المرور فقط)
         const desktopForm = document.getElementById('loginForm');
         const desktopEmail = document.getElementById('email');
         const desktopPassword = document.getElementById('password');
@@ -936,6 +1052,11 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         desktopForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!isCaptchaVerifiedDesktop) {
+                showToast('يرجى إكمال التحقق "لست روبوت" أولاً', true);
+                return;
+            }
+            
             const email = desktopEmail.value.trim();
             const password = desktopPassword.value.trim();
 
@@ -974,7 +1095,7 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             }
         });
 
-        // ========== Mobile Login ==========
+        // Mobile Login (البريد وكلمة المرور فقط)
         const mobileForm = document.getElementById('mobileLoginForm');
         const mobileEmail = document.getElementById('mobileEmail');
         const mobilePassword = document.getElementById('mobilePassword');
@@ -992,40 +1113,45 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         mobileForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!isCaptchaVerifiedMobile) {
+                showToast('يرجى إكمال التحقق "لست روبوت" أولاً', true);
+                return;
+            }
+            
             const email = mobileEmail.value.trim();
             const password = mobilePassword.value.trim();
 
             if (!email.includes('@')) {
-                showToast('Please enter a valid email', true);
+                showToast('الرجاء إدخال بريد إلكتروني صحيح', true);
                 return;
             }
             if (password.length < 6) {
-                showToast('Password must be at least 6 characters', true);
+                showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', true);
                 return;
             }
 
             mobileLoginBtn.disabled = true;
-            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> Logging in...';
+            mobileLoginBtn.innerHTML = '<div class="loading-spinner"></div> جاري الدخول...';
 
             try {
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 showWelcomeScreen(userCredential.user);
-                showToast('Login successful!');
+                showToast('تم تسجيل الدخول بنجاح!');
             } catch (error) {
                 if (error.code === 'auth/user-not-found') {
-                    showToast('No account found with this email', true);
+                    showToast('لا يوجد حساب بهذا البريد', true);
                 } else if (error.code === 'auth/wrong-password') {
-                    showToast('Incorrect password', true);
+                    showToast('كلمة المرور غير صحيحة', true);
                 } else {
                     showToast(error.message, true);
                 }
             } finally {
                 mobileLoginBtn.disabled = false;
-                mobileLoginBtn.innerHTML = '<span>Login</span><i class="fas fa-arrow-left"></i>';
+                mobileLoginBtn.innerHTML = '<span>تسجيل الدخول</span><i class="fas fa-arrow-left"></i>';
             }
         });
 
-        // ========== Google Sign-In (Desktop) ==========
+        // Google Sign-In (يعمل بدون تحقق)
         async function googleSignIn() {
             const provider = new firebase.auth.GoogleAuthProvider();
             try {
@@ -1039,7 +1165,7 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         document.getElementById('googleBtn')?.addEventListener('click', googleSignIn);
 
-        // ========== GitHub Sign-In (Desktop) ==========
+        // GitHub Sign-In (يعمل بدون تحقق)
         async function githubSignIn() {
             const provider = new firebase.auth.GithubAuthProvider();
             try {
@@ -1053,18 +1179,18 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         document.getElementById('githubBtn')?.addEventListener('click', githubSignIn);
 
-        // ========== Forgot Password (Desktop & Mobile) ==========
+        // Forgot Password
         async function handleForgotPassword(isDesktop = true) {
-            const email = prompt(isDesktop ? 'الرجاء إدخال بريدك الإلكتروني:' : 'Please enter your email address:');
+            const email = prompt(isDesktop ? 'الرجاء إدخال بريدك الإلكتروني:' : 'الرجاء إدخال بريدك الإلكتروني:');
             if (email && email.includes('@')) {
                 try {
                     await auth.sendPasswordResetEmail(email);
-                    showToast(isDesktop ? `تم إرسال رابط استعادة كلمة المرور إلى ${email}` : `Password reset link sent to ${email}`);
+                    showToast(isDesktop ? `تم إرسال رابط استعادة كلمة المرور إلى ${email}` : `تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
                 } catch (error) {
                     showToast(error.message, true);
                 }
             } else if (email) {
-                showToast(isDesktop ? 'الرجاء إدخال بريد إلكتروني صحيح' : 'Please enter a valid email', true);
+                showToast(isDesktop ? 'الرجاء إدخال بريد إلكتروني صحيح' : 'الرجاء إدخال بريد إلكتروني صحيح', true);
             }
         }
 
@@ -1073,12 +1199,7 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             handleForgotPassword(true);
         });
 
-        document.getElementById('mobileForgotBtn')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            handleForgotPassword(false);
-        });
-
-        // ========== Redirects ==========
+        // Redirects
         document.getElementById('signupRedirectDesktop')?.addEventListener('click', (e) => {
             e.preventDefault();
             window.location.href = 'signup.html';
@@ -1097,8 +1218,9 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             }
         });
 
-
-        
+        // تأكد من أن حقول البريد وكلمة المرور معطلة في البداية
+        disableDesktopForm();
+        disableMobileForm();
     </script>
 </body>
 </html>
