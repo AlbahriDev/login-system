@@ -278,28 +278,27 @@
         }
 
         .login-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 1rem;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Cairo', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
-
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+}
         .divider {
             display: flex;
             align-items: center;
@@ -836,6 +835,8 @@
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        // تفعيل تذكر الجلسة بشكل دائم
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         // Elements
         const toast = document.getElementById('toastMsg');
@@ -858,19 +859,17 @@
         }
 
     function showWelcomeScreen(user) {
-    let displayName = "مستخدم";
-    let email = "بريد إلكتروني غير متوفر";
+    // 1. محاولة جلب الاسم من عدة مصادر
+    let displayName = user.displayName || 
+                      (user.providerData && user.providerData[0] && user.providerData[0].displayName) || 
+                      (user.email ? user.email.split("@")[0] : "مستخدم");
 
-    if (user.displayName) {
-        displayName = user.displayName;
-    } else if (user.email) {
-        displayName = user.email.split("@")[0];
-        email = user.email;
-    } else if (user.providerData && user.providerData[0]) {
-        displayName = user.providerData[0].displayName || "مستخدم";
-        email = user.providerData[0].email || "بريد إلكتروني غير متوفر";
-    }
+    // 2. محاولة جلب البريد من عدة مصادر
+    let email = user.email || 
+                (user.providerData && user.providerData[0] && user.providerData[0].email) || 
+                "بريد إلكتروني غير متوفر";
 
+    // تحديث الواجهة
     welcomeName.textContent = `مرحباً، ${displayName}`;
     userEmailDisplay.textContent = email;
     welcomeScreen.classList.add("active");
@@ -1076,6 +1075,9 @@
                 showWelcomeScreen(user);
             }
         });
+
+
+        
     </script>
 </body>
 </html>
