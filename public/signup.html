@@ -33,16 +33,56 @@
         }
 
         .hero-section {
-            flex: 1;
-            background: linear-gradient(145deg, #0a0a2a 0%, #0f0f3a 50%, #1a1a4e 100%);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 3rem;
-        }
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 3rem;
+}
+
+/* طبقة الخلفية بالصورة مع بلور */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&h=800&fit=crop');
+    background-size: cover;
+    background-position: center;
+    filter: blur(4px);
+    transform: scale(1.05);
+    z-index: 0;
+}
+
+/* طبقة اللون الأزرق الشفاف فوق الصورة */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 42, 0.7);
+    z-index: 1;
+}
+
+.hero-section .bg-circle-1,
+.hero-section .bg-circle-2 {
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
 
         .hero-section .bg-circle-1 {
             position: absolute;
@@ -274,16 +314,16 @@
             max-width: 400px;
         }
 
-        .mobile-logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #2e7d32, #43a047);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
+      .mobile-logo {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
 
         .mobile-logo svg {
             width: 38px;
@@ -391,23 +431,30 @@
         }
 
         .btn-primary {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border: none;
-            border-radius: 1rem;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Cairo', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, #2e7d32, #43a047, #66bb6a);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-primary:hover {
+    background-position: 100% 100%;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+}
 
         .btn-primary:hover {
             transform: translateY(-2px);
@@ -519,14 +566,8 @@
             <div class="bg-circle-1"></div>
             <div class="bg-circle-2"></div>
             <div class="hero-content">
-                <div class="hero-logo">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h1>Rento</h1>
-                <p>منصة متكاملة لإدارة أعمالك<br>بكل سهولة واحترافية</p>
-            </div>
+    <!-- تم حذف المحتوى -->
+</div>
         </div>
 
         <div class="form-section">
