@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>تسجيل الدخول </title>
+    <title>تسجيل الدخول</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -40,9 +40,6 @@
         min-height: 100vh;
       }
 
-      /* ========================================
-           تصميم الكمبيوتر
-           ======================================== */
       .desktop-layout {
         display: flex;
         min-height: 100vh;
@@ -273,7 +270,6 @@
         color: transparent;
       }
 
-      /* حقل reCAPTCHA */
       .captcha-container {
         margin-bottom: 1.5rem;
         display: flex;
@@ -400,9 +396,6 @@
         font-weight: 700;
       }
 
-      /* ========================================
-           تصميم الهاتف
-           ======================================== */
       .mobile-layout {
         display: none;
         min-height: 100vh;
@@ -611,18 +604,6 @@
         cursor: not-allowed;
       }
 
-      .mobile-forgot {
-        text-align: center;
-        margin-top: 1rem;
-      }
-
-      .mobile-forgot a {
-        color: #2e7d32;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.85rem;
-      }
-
       .mobile-signup-link {
         text-align: center;
         margin-top: 1.5rem;
@@ -725,7 +706,6 @@
         }
       }
 
-      /* حالة تعطيل حقول البريد وكلمة المرور فقط قبل التحقق */
       .input-group.disabled-input input {
         background: #f1f5f9;
         opacity: 0.7;
@@ -785,7 +765,6 @@
             <p>تحقق من هويتك أولاً ثم أدخل بياناتك</p>
           </div>
 
-          <!-- حقل reCAPTCHA - يظهر أولاً -->
           <div class="captcha-container">
             <div
               class="g-recaptcha"
@@ -800,13 +779,7 @@
 
           <form id="loginForm">
             <div class="input-group disabled-input" id="desktopEmailGroup">
-              <input
-                type="email"
-                id="email"
-                placeholder=" "
-                disabled
-                required
-              />
+              <input type="email" id="email" placeholder=" " disabled required />
               <label>البريد الإلكتروني</label>
               <i class="fas fa-envelope icon"></i>
             </div>
@@ -877,7 +850,7 @@
 
           <div class="signup-link">
             ليس لديك حساب؟
-            <a href="#" id="signupRedirectDesktop">إنشاء حساب جديد</a>
+            <a href="signup.html" id="signupRedirectDesktop">إنشاء حساب جديد</a>
           </div>
         </div>
       </div>
@@ -1003,7 +976,7 @@
           </button>
 
           <div class="mobile-signup-link">
-            ليس لديك حساب؟ <a href="#" id="mobileSignupLink">إنشاء حساب</a>
+            ليس لديك حساب؟ <a href="signup.html" id="mobileSignupLink">إنشاء حساب</a>
           </div>
         </form>
       </div>
@@ -1073,7 +1046,7 @@
         }, 3000);
       }
 
-      // تفعيل حقول البريد وكلمة المرور فقط (بدون أزرار جوجل وجيت هاب)
+      // تفعيل حقول البريد وكلمة المرور فقط
       function enableDesktopForm() {
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
@@ -1203,20 +1176,23 @@
         welcomeScreen.classList.remove("active");
       }
 
+      // ✅ دالة تسجيل الخروج - تم تصحيحها
       async function logout() {
         try {
           await auth.signOut();
           hideWelcomeScreen();
-          showToast("تم تسجيل الخروج بنجاح");
+          showToast("✅ تم تسجيل الخروج بنجاح");
+          // إعادة تحميل الصفحة بعد نصف ثانية
           setTimeout(() => {
             window.location.reload();
           }, 500);
         } catch (error) {
-          showToast("حدث خطأ: " + error.message, true);
+          console.error("خطأ في تسجيل الخروج:", error);
+          showToast("❌ حدث خطأ: " + error.message, true);
         }
       }
 
-      // Desktop Login (البريد وكلمة المرور فقط)
+      // Desktop Login
       const desktopForm = document.getElementById("loginForm");
       const desktopEmail = document.getElementById("email");
       const desktopPassword = document.getElementById("password");
@@ -1273,14 +1249,16 @@
             localStorage.removeItem("rememberedEmail");
           }
           showWelcomeScreen(userCredential.user);
-          showToast("تم تسجيل الدخول بنجاح!");
+          showToast("✅ تم تسجيل الدخول بنجاح!");
         } catch (error) {
           if (error.code === "auth/user-not-found") {
-            showToast("لا يوجد حساب بهذا البريد", true);
+            showToast("❌ لا يوجد حساب بهذا البريد", true);
           } else if (error.code === "auth/wrong-password") {
-            showToast("كلمة المرور غير صحيحة", true);
+            showToast("❌ كلمة المرور غير صحيحة", true);
+          } else if (error.code === "auth/invalid-credential") {
+            showToast("❌ هذا الحساب مسجل بـ Google! استخدم زر تسجيل الدخول بـ Google", true);
           } else {
-            showToast(error.message, true);
+            showToast("❌ " + error.message, true);
           }
         } finally {
           desktopLoginBtn.disabled = false;
@@ -1289,7 +1267,7 @@
         }
       });
 
-      // Mobile Login (البريد وكلمة المرور فقط)
+      // Mobile Login
       const mobileForm = document.getElementById("mobileLoginForm");
       const mobileEmail = document.getElementById("mobileEmail");
       const mobilePassword = document.getElementById("mobilePassword");
@@ -1336,14 +1314,16 @@
             password,
           );
           showWelcomeScreen(userCredential.user);
-          showToast("تم تسجيل الدخول بنجاح!");
+          showToast("✅ تم تسجيل الدخول بنجاح!");
         } catch (error) {
           if (error.code === "auth/user-not-found") {
-            showToast("لا يوجد حساب بهذا البريد", true);
+            showToast("❌ لا يوجد حساب بهذا البريد", true);
           } else if (error.code === "auth/wrong-password") {
-            showToast("كلمة المرور غير صحيحة", true);
+            showToast("❌ كلمة المرور غير صحيحة", true);
+          } else if (error.code === "auth/invalid-credential") {
+            showToast("❌ هذا الحساب مسجل بـ Google! استخدم زر تسجيل الدخول بـ Google", true);
           } else {
-            showToast(error.message, true);
+            showToast("❌ " + error.message, true);
           }
         } finally {
           mobileLoginBtn.disabled = false;
@@ -1352,15 +1332,15 @@
         }
       });
 
-      // Google Sign-In (يعمل بدون تحقق)
+      // Google Sign-In
       async function googleSignIn() {
         const provider = new firebase.auth.GoogleAuthProvider();
         try {
           const result = await auth.signInWithPopup(provider);
           showWelcomeScreen(result.user);
-          showToast("تم تسجيل الدخول بنجاح عبر Google!");
+          showToast("✅ تم تسجيل الدخول بنجاح عبر Google!");
         } catch (error) {
-          showToast(error.message, true);
+          showToast("❌ " + error.message, true);
         }
       }
 
@@ -1368,15 +1348,15 @@
         .getElementById("googleBtn")
         ?.addEventListener("click", googleSignIn);
 
-      // GitHub Sign-In (يعمل بدون تحقق)
+      // GitHub Sign-In
       async function githubSignIn() {
         const provider = new firebase.auth.GithubAuthProvider();
         try {
           const result = await auth.signInWithPopup(provider);
           showWelcomeScreen(result.user);
-          showToast("تم تسجيل الدخول بنجاح عبر GitHub!");
+          showToast("✅ تم تسجيل الدخول بنجاح عبر GitHub!");
         } catch (error) {
-          showToast(error.message, true);
+          showToast("❌ " + error.message, true);
         }
       }
 
@@ -1385,91 +1365,82 @@
         ?.addEventListener("click", githubSignIn);
 
       // Forgot Password
-      async; // Forgot Password - نسخة محسنة
       function handleForgotPassword(isDesktop = true) {
-        // إنشاء نافذة مخصصة بدلاً من prompt
-        const email = promptForEmail(isDesktop);
-        if (email && email.includes("@")) {
-          showToast("جاري إرسال رابط الاستعادة...");
-          auth
-            .sendPasswordResetEmail(email)
-            .then(() => {
-              showToast(`✅ تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
-            })
-            .catch((error) => {
-              if (error.code === "auth/user-not-found") {
-                showToast("❌ لا يوجد حساب مرتبط بهذا البريد الإلكتروني", true);
-              } else if (error.code === "auth/invalid-email") {
-                showToast("❌ البريد الإلكتروني غير صالح", true);
-              } else if (error.code === "auth/too-many-requests") {
-                showToast(
-                  "❌ تم إرسال العديد من الطلبات. يرجى المحاولة لاحقاً",
-                  true,
-                );
-              } else {
-                showToast("❌ " + error.message, true);
-              }
-            });
-        } else if (email) {
-          showToast("❌ الرجاء إدخال بريد إلكتروني صحيح", true);
-        }
-      }
-
-      function promptForEmail(isDesktop) {
-        // إنشاء نافذة مخصصة
         const modal = document.createElement("div");
         modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-    `;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
+        `;
 
         modal.innerHTML = `
-        <div style="background: white; padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;">
+          <div style="background: white; padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;">
             <h3 style="margin-bottom: 1rem; color: #1e293b;">استعادة كلمة المرور</h3>
             <p style="margin-bottom: 1rem; color: #64748b;">أدخل بريدك الإلكتروني</p>
             <input type="email" id="emailInput" placeholder="example@email.com" style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; margin-bottom: 1rem; font-family: inherit;">
             <div style="display: flex; gap: 1rem;">
-                <button id="confirmBtn" style="flex: 1; padding: 0.8rem; background: #6366f1; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إرسال</button>
-                <button id="cancelBtn" style="flex: 1; padding: 0.8rem; background: #ef4444; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إلغاء</button>
+              <button id="confirmBtn" style="flex: 1; padding: 0.8rem; background: #6366f1; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إرسال</button>
+              <button id="cancelBtn" style="flex: 1; padding: 0.8rem; background: #ef4444; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إلغاء</button>
             </div>
-        </div>
-    `;
+          </div>
+        `;
 
         document.body.appendChild(modal);
 
-        return new Promise((resolve) => {
-          const emailInput = modal.querySelector("#emailInput");
-          const confirmBtn = modal.querySelector("#confirmBtn");
-          const cancelBtn = modal.querySelector("#cancelBtn");
+        const emailInput = modal.querySelector("#emailInput");
+        const confirmBtn = modal.querySelector("#confirmBtn");
+        const cancelBtn = modal.querySelector("#cancelBtn");
 
-          confirmBtn.onclick = () => {
+        confirmBtn.onclick = () => {
+          const email = emailInput.value.trim();
+          modal.remove();
+          if (email && email.includes("@")) {
+            showToast("📧 جاري إرسال رابط الاستعادة...");
+            auth.sendPasswordResetEmail(email)
+              .then(() => {
+                showToast(`✅ تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
+              })
+              .catch((error) => {
+                if (error.code === "auth/user-not-found") {
+                  showToast("❌ لا يوجد حساب مرتبط بهذا البريد الإلكتروني", true);
+                } else {
+                  showToast("❌ " + error.message, true);
+                }
+              });
+          } else if (email) {
+            showToast("❌ الرجاء إدخال بريد إلكتروني صحيح", true);
+          }
+        };
+
+        cancelBtn.onclick = () => {
+          modal.remove();
+        };
+
+        emailInput.onkeypress = (e) => {
+          if (e.key === "Enter") {
             const email = emailInput.value.trim();
             modal.remove();
-            resolve(email);
-          };
-
-          cancelBtn.onclick = () => {
-            modal.remove();
-            resolve(null);
-          };
-
-          // الضغط على Enter
-          emailInput.onkeypress = (e) => {
-            if (e.key === "Enter") {
-              const email = emailInput.value.trim();
-              modal.remove();
-              resolve(email);
+            if (email && email.includes("@")) {
+              showToast("📧 جاري إرسال رابط الاستعادة...");
+              auth.sendPasswordResetEmail(email)
+                .then(() => {
+                  showToast(`✅ تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
+                })
+                .catch((error) => {
+                  showToast("❌ " + error.message, true);
+                });
+            } else if (email) {
+              showToast("❌ الرجاء إدخال بريد إلكتروني صحيح", true);
             }
-          };
-        });
+          }
+        };
       }
 
       document
@@ -1494,8 +1465,14 @@
           window.location.href = "signup.html";
         });
 
-      logoutBtn.addEventListener("click", logout);
+      // ✅ تأكد من ربط حدث تسجيل الخروج بشكل صحيح
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+      } else {
+        console.error("❌ زر تسجيل الخروج غير موجود في الصفحة!");
+      }
 
+      // مراقبة حالة تسجيل الدخول
       auth.onAuthStateChanged((user) => {
         if (user) {
           showWelcomeScreen(user);
