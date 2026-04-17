@@ -270,11 +270,136 @@
         color: transparent;
       }
 
+      /* نافذة reCAPTCHA المنبثقة */
+      .captcha-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .captcha-modal.active {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .captcha-modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .captcha-modal-content h3 {
+        margin-bottom: 1rem;
+        color: #1e293b;
+      }
+
+      .captcha-modal-content p {
+        margin-bottom: 1rem;
+        color: #64748b;
+      }
+
       .captcha-container {
-        margin-bottom: 1.5rem;
+        margin: 1rem 0;
         display: flex;
         justify-content: center;
-        transform: scale(0.9);
+      }
+
+      /* نافذة إضافة كلمة المرور */
+      .add-password-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .add-password-modal.active {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .add-password-modal .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .add-password-modal h3 {
+        margin-bottom: 1rem;
+        color: #1e293b;
+      }
+
+      .add-password-modal p {
+        margin-bottom: 1rem;
+        color: #64748b;
+      }
+
+      .add-password-modal input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        font-family: inherit;
+        font-size: 1rem;
+      }
+
+      .add-password-modal input:focus {
+        outline: none;
+        border-color: #6366f1;
+      }
+
+      .add-password-modal .btn-group {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .add-password-modal .confirm-btn {
+        flex: 1;
+        padding: 0.8rem;
+        background: #6366f1;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+      }
+
+      .add-password-modal .cancel-btn {
+        flex: 1;
+        padding: 0.8rem;
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
       }
 
       .options {
@@ -706,28 +831,6 @@
         }
       }
 
-      .input-group.disabled-input input {
-        background: #f1f5f9;
-        opacity: 0.7;
-        pointer-events: none;
-      }
-
-      .input-group.disabled-input .icon {
-        opacity: 0.5;
-      }
-
-      .captcha-status {
-        text-align: center;
-        font-size: 0.75rem;
-        color: #10b981;
-        margin-top: 0.25rem;
-        display: none;
-      }
-
-      .captcha-status.show {
-        display: block;
-      }
-
       @media (max-width: 768px) {
         .desktop-layout {
           display: none;
@@ -762,34 +865,26 @@
         <div class="form-container">
           <div class="form-header">
             <h2>تسجيل الدخول</h2>
-            <p>تحقق من هويتك أولاً ثم أدخل بياناتك</p>
-          </div>
-
-          <div class="captcha-container">
-            <div
-              class="g-recaptcha"
-              data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-              data-callback="onCaptchaSuccess"
-              data-expired-callback="onCaptchaExpired"
-            ></div>
-          </div>
-          <div class="captcha-status" id="captchaStatusDesktop">
-            <i class="fas fa-check-circle"></i> تم التحقق بنجاح
+            <p>أدخل بياناتك أو استخدم حساب Google</p>
           </div>
 
           <form id="loginForm">
-            <div class="input-group disabled-input" id="desktopEmailGroup">
-              <input type="email" id="email" placeholder=" " disabled required />
+            <div class="input-group">
+              <input
+                type="email"
+                id="email"
+                placeholder=" "
+                required
+              />
               <label>البريد الإلكتروني</label>
               <i class="fas fa-envelope icon"></i>
             </div>
 
-            <div class="input-group disabled-input" id="desktopPasswordGroup">
+            <div class="input-group">
               <input
                 type="password"
                 id="password"
                 placeholder=" "
-                disabled
                 required
               />
               <label>كلمة المرور</label>
@@ -802,7 +897,7 @@
 
             <div class="options">
               <label class="remember">
-                <input type="checkbox" id="rememberCheck" disabled />
+                <input type="checkbox" id="rememberCheck" />
                 <span>تذكر بياناتي</span>
               </label>
               <a href="forgot-password.html" class="forgot" id="forgotPassword"
@@ -810,7 +905,7 @@
               >
             </div>
 
-            <button type="submit" class="login-btn" id="loginBtn" disabled>
+            <button type="submit" class="login-btn" id="loginBtn">
               <span>تسجيل الدخول</span>
               <i class="fas fa-arrow-left"></i>
             </button>
@@ -922,39 +1017,25 @@
           </svg>
         </div>
         <h1>مرحباً!</h1>
-        <p class="subtitle">قم بالتحقق أولاً</p>
-
-        <div class="captcha-container">
-          <div
-            class="g-recaptcha"
-            data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-            data-callback="onMobileCaptchaSuccess"
-            data-expired-callback="onMobileCaptchaExpired"
-          ></div>
-        </div>
-        <div class="captcha-status" id="captchaStatusMobile">
-          <i class="fas fa-check-circle"></i> تم التحقق بنجاح
-        </div>
+        <p class="subtitle">أدخل بياناتك أو استخدم حساب Google</p>
 
         <form id="mobileLoginForm">
-          <div class="input-group disabled-input" id="mobileEmailGroup">
+          <div class="input-group">
             <input
               type="email"
               id="mobileEmail"
               placeholder=" "
-              disabled
               required
             />
             <label>البريد الإلكتروني</label>
             <i class="fas fa-envelope icon"></i>
           </div>
 
-          <div class="input-group disabled-input" id="mobilePasswordGroup">
+          <div class="input-group">
             <input
               type="password"
               id="mobilePassword"
               placeholder=" "
-              disabled
               required
             />
             <label>كلمة المرور</label>
@@ -969,16 +1050,66 @@
             type="submit"
             class="mobile-login-btn"
             id="mobileLoginBtn"
-            disabled
           >
             <span>تسجيل الدخول</span>
             <i class="fas fa-arrow-left"></i>
           </button>
 
           <div class="mobile-signup-link">
-            ليس لديك حساب؟ <a href="signup.html" id="mobileSignupLink">إنشاء حساب</a>
+            ليس لديك حساب؟
+            <a href="signup.html" id="mobileSignupLink">إنشاء حساب</a>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- نافذة reCAPTCHA المنبثقة للكمبيوتر -->
+    <div id="captchaModalDesktop" class="captcha-modal">
+      <div class="captcha-modal-content">
+        <h3>التحقق الأمني</h3>
+        <p>يرجى إكمال التحقق "أنا لست روبوت"</p>
+        <div class="captcha-container">
+          <div
+            id="recaptchaDesktop"
+            class="g-recaptcha"
+            data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            data-callback="onCaptchaSuccess"
+            data-expired-callback="onCaptchaExpired"
+          ></div>
+        </div>
+        <button id="closeCaptchaDesktop" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #ef4444; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إلغاء</button>
+      </div>
+    </div>
+
+    <!-- نافذة reCAPTCHA المنبثقة للهاتف -->
+    <div id="captchaModalMobile" class="captcha-modal">
+      <div class="captcha-modal-content">
+        <h3>التحقق الأمني</h3>
+        <p>يرجى إكمال التحقق "أنا لست روبوت"</p>
+        <div class="captcha-container">
+          <div
+            id="recaptchaMobile"
+            class="g-recaptcha"
+            data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            data-callback="onMobileCaptchaSuccess"
+            data-expired-callback="onMobileCaptchaExpired"
+          ></div>
+        </div>
+        <button id="closeCaptchaMobile" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #ef4444; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إلغاء</button>
+      </div>
+    </div>
+
+    <!-- نافذة إضافة كلمة المرور -->
+    <div id="addPasswordModal" class="add-password-modal">
+      <div class="modal-content">
+        <h3>إضافة كلمة مرور للحساب</h3>
+        <p>حسابك مسجل بـ Google. يمكنك إضافة كلمة مرور لتتمكن من تسجيل الدخول بالبريد الإلكتروني أيضاً.</p>
+        <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" autocomplete="off">
+        <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" autocomplete="off">
+        <div class="btn-group">
+          <button id="confirmAddPassword" class="confirm-btn">إضافة كلمة المرور</button>
+          <button id="cancelAddPassword" class="cancel-btn">إلغاء</button>
+        </div>
       </div>
     </div>
 
@@ -1032,9 +1163,24 @@
       const userEmailDisplay = document.getElementById("userEmailDisplay");
       const logoutBtn = document.getElementById("logoutBtn");
 
+      // Elements for captcha modals
+      const captchaModalDesktop = document.getElementById("captchaModalDesktop");
+      const captchaModalMobile = document.getElementById("captchaModalMobile");
+      const closeCaptchaDesktop = document.getElementById("closeCaptchaDesktop");
+      const closeCaptchaMobile = document.getElementById("closeCaptchaMobile");
+
+      // Elements for add password modal
+      const addPasswordModal = document.getElementById("addPasswordModal");
+      const newPasswordInput = document.getElementById("newPassword");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const confirmAddPassword = document.getElementById("confirmAddPassword");
+      const cancelAddPassword = document.getElementById("cancelAddPassword");
+
       let toastTimeout;
       let isCaptchaVerifiedDesktop = false;
       let isCaptchaVerifiedMobile = false;
+      let pendingLoginData = null;
+      let pendingGoogleUser = null;
 
       function showToast(message, isError = false) {
         clearTimeout(toastTimeout);
@@ -1046,102 +1192,176 @@
         }, 3000);
       }
 
-      // تفعيل حقول البريد وكلمة المرور فقط
-      function enableDesktopForm() {
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-        const rememberCheck = document.getElementById("rememberCheck");
-        const loginBtn = document.getElementById("loginBtn");
-        const emailGroup = document.getElementById("desktopEmailGroup");
-        const passwordGroup = document.getElementById("desktopPasswordGroup");
-
-        emailInput.disabled = false;
-        passwordInput.disabled = false;
-        rememberCheck.disabled = false;
-        loginBtn.disabled = false;
-
-        emailGroup.classList.remove("disabled-input");
-        passwordGroup.classList.remove("disabled-input");
+      // إخفاء نافذة إضافة كلمة المرور
+      function hideAddPasswordModal() {
+        addPasswordModal.classList.remove("active");
+        newPasswordInput.value = "";
+        confirmPasswordInput.value = "";
+        pendingGoogleUser = null;
       }
 
-      function disableDesktopForm() {
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-        const rememberCheck = document.getElementById("rememberCheck");
-        const loginBtn = document.getElementById("loginBtn");
-        const emailGroup = document.getElementById("desktopEmailGroup");
-        const passwordGroup = document.getElementById("desktopPasswordGroup");
-
-        emailInput.disabled = true;
-        passwordInput.disabled = true;
-        rememberCheck.disabled = true;
-        loginBtn.disabled = true;
-
-        emailGroup.classList.add("disabled-input");
-        passwordGroup.classList.add("disabled-input");
+      // إظهار نافذة إضافة كلمة المرور
+      function showAddPasswordModal(user) {
+        pendingGoogleUser = user;
+        addPasswordModal.classList.add("active");
       }
 
-      function enableMobileForm() {
-        const emailInput = document.getElementById("mobileEmail");
-        const passwordInput = document.getElementById("mobilePassword");
-        const loginBtn = document.getElementById("mobileLoginBtn");
-        const emailGroup = document.getElementById("mobileEmailGroup");
-        const passwordGroup = document.getElementById("mobilePasswordGroup");
-
-        emailInput.disabled = false;
-        passwordInput.disabled = false;
-        loginBtn.disabled = false;
-
-        emailGroup.classList.remove("disabled-input");
-        passwordGroup.classList.remove("disabled-input");
+      // إضافة كلمة مرور لحساب Google
+      async function addPasswordToGoogleAccount(password) {
+        if (!pendingGoogleUser) return false;
+        
+        try {
+          const credential = firebase.auth.EmailAuthProvider.credential(
+            pendingGoogleUser.email,
+            password
+          );
+          await pendingGoogleUser.linkWithCredential(credential);
+          showToast("✅ تم إضافة كلمة المرور بنجاح! يمكنك الآن تسجيل الدخول بالبريد الإلكتروني وكلمة المرور");
+          showWelcomeScreen(pendingGoogleUser);
+          hideAddPasswordModal();
+          return true;
+        } catch (error) {
+          console.error("خطأ:", error);
+          if (error.code === "auth/credential-already-in-use") {
+            showToast("⚠️ هذا البريد الإلكتروني مسجل بالفعل بكلمة مرور", true);
+          } else {
+            showToast("❌ " + error.message, true);
+          }
+          return false;
+        }
       }
 
-      function disableMobileForm() {
-        const emailInput = document.getElementById("mobileEmail");
-        const passwordInput = document.getElementById("mobilePassword");
-        const loginBtn = document.getElementById("mobileLoginBtn");
-        const emailGroup = document.getElementById("mobileEmailGroup");
-        const passwordGroup = document.getElementById("mobilePasswordGroup");
+      confirmAddPassword.addEventListener("click", async () => {
+        const newPassword = newPasswordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+        
+        if (newPassword.length < 6) {
+          showToast("كلمة المرور يجب أن تكون 6 أحرف على الأقل", true);
+          return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+          showToast("كلمة المرور غير متطابقة", true);
+          return;
+        }
+        
+        confirmAddPassword.disabled = true;
+        confirmAddPassword.innerHTML = '<div class="loading-spinner"></div>';
+        
+        await addPasswordToGoogleAccount(newPassword);
+        
+        confirmAddPassword.disabled = false;
+        confirmAddPassword.innerHTML = 'إضافة كلمة المرور';
+      });
 
-        emailInput.disabled = true;
-        passwordInput.disabled = true;
-        loginBtn.disabled = true;
-
-        emailGroup.classList.add("disabled-input");
-        passwordGroup.classList.add("disabled-input");
-      }
+      cancelAddPassword.addEventListener("click", () => {
+        hideAddPasswordModal();
+        showToast("تم إلغاء العملية", true);
+      });
 
       // Desktop reCAPTCHA callbacks
       window.onCaptchaSuccess = function () {
         isCaptchaVerifiedDesktop = true;
-        document.getElementById("captchaStatusDesktop").classList.add("show");
-        enableDesktopForm();
-        showToast("تم التحقق بنجاح! يمكنك الآن إدخال بياناتك");
+        showToast("تم التحقق بنجاح! جاري تسجيل الدخول...");
+        captchaModalDesktop.classList.remove("active");
+        if (pendingLoginData) {
+          performLogin(pendingLoginData.email, pendingLoginData.password, pendingLoginData.remember, pendingLoginData.isDesktop);
+          pendingLoginData = null;
+        }
       };
 
       window.onCaptchaExpired = function () {
         isCaptchaVerifiedDesktop = false;
-        document
-          .getElementById("captchaStatusDesktop")
-          .classList.remove("show");
-        disableDesktopForm();
-        showToast("انتهت صلاحية التحقق، يرجى إعادة التحقق", true);
+        showToast("انتهت صلاحية التحقق، يرجى إعادة المحاولة", true);
       };
 
       // Mobile reCAPTCHA callbacks
       window.onMobileCaptchaSuccess = function () {
         isCaptchaVerifiedMobile = true;
-        document.getElementById("captchaStatusMobile").classList.add("show");
-        enableMobileForm();
-        showToast("تم التحقق بنجاح! يمكنك الآن إدخال بياناتك");
+        showToast("تم التحقق بنجاح! جاري تسجيل الدخول...");
+        captchaModalMobile.classList.remove("active");
+        if (pendingLoginData) {
+          performLogin(pendingLoginData.email, pendingLoginData.password, pendingLoginData.remember, pendingLoginData.isDesktop);
+          pendingLoginData = null;
+        }
       };
 
       window.onMobileCaptchaExpired = function () {
         isCaptchaVerifiedMobile = false;
-        document.getElementById("captchaStatusMobile").classList.remove("show");
-        disableMobileForm();
-        showToast("انتهت صلاحية التحقق، يرجى إعادة التحقق", true);
+        showToast("انتهت صلاحية التحقق، يرجى إعادة المحاولة", true);
       };
+
+      if (closeCaptchaDesktop) {
+        closeCaptchaDesktop.addEventListener("click", () => {
+          captchaModalDesktop.classList.remove("active");
+          pendingLoginData = null;
+        });
+      }
+
+      if (closeCaptchaMobile) {
+        closeCaptchaMobile.addEventListener("click", () => {
+          captchaModalMobile.classList.remove("active");
+          pendingLoginData = null;
+        });
+      }
+
+      // دالة تنفيذ تسجيل الدخول
+      async function performLogin(email, password, remember, isDesktop = true) {
+        const loginBtn = isDesktop ? desktopLoginBtn : mobileLoginBtn;
+        
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<div class="loading-spinner"></div> جاري الدخول...';
+
+        try {
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          if (remember) {
+            localStorage.setItem("rememberedEmail", email);
+          } else {
+            localStorage.removeItem("rememberedEmail");
+          }
+          showWelcomeScreen(userCredential.user);
+          showToast("✅ تم تسجيل الدخول بنجاح!");
+        } catch (error) {
+          console.error("خطأ:", error);
+          
+          if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password") {
+            try {
+              const methods = await auth.fetchSignInMethodsForEmail(email);
+              if (methods.includes('google.com')) {
+                showToast("⚠️ هذا الحساب مسجل بـ Google! جاري تحويلك لإضافة كلمة مرور...", false);
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const googleResult = await auth.signInWithPopup(provider);
+                if (googleResult.user && googleResult.user.email === email) {
+                  showAddPasswordModal(googleResult.user);
+                }
+              } else {
+                showToast("❌ لا يوجد حساب بهذا البريد أو كلمة المرور غير صحيحة", true);
+              }
+            } catch (fetchError) {
+              showToast("❌ لا يوجد حساب بهذا البريد أو كلمة المرور غير صحيحة", true);
+            }
+          } else if (error.code === "auth/user-not-found") {
+            showToast("❌ لا يوجد حساب بهذا البريد", true);
+          } else {
+            showToast("❌ " + error.message, true);
+          }
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = '<span>تسجيل الدخول</span><i class="fas fa-arrow-left"></i>';
+        }
+      }
+
+      function showCaptchaModal(email, password, remember, isDesktop = true) {
+        pendingLoginData = { email, password, remember, isDesktop };
+        
+        if (isDesktop) {
+          if (grecaptcha) grecaptcha.reset();
+          captchaModalDesktop.classList.add("active");
+        } else {
+          if (grecaptcha) grecaptcha.reset();
+          captchaModalMobile.classList.add("active");
+        }
+      }
 
       function showWelcomeScreen(user) {
         let displayName = "مستخدم";
@@ -1160,12 +1380,7 @@
           displayName = user.email.split("@")[0];
         }
 
-        let email =
-          user.email ||
-          (user.providerData &&
-            user.providerData[0] &&
-            user.providerData[0].email) ||
-          "بريد إلكتروني غير متوفر";
+        let email = user.email || (user.providerData && user.providerData[0] && user.providerData[0].email) || "بريد إلكتروني غير متوفر";
 
         welcomeName.textContent = `مرحباً، ${displayName}`;
         userEmailDisplay.textContent = email;
@@ -1176,13 +1391,11 @@
         welcomeScreen.classList.remove("active");
       }
 
-      // ✅ دالة تسجيل الخروج - تم تصحيحها
       async function logout() {
         try {
           await auth.signOut();
           hideWelcomeScreen();
           showToast("✅ تم تسجيل الخروج بنجاح");
-          // إعادة تحميل الصفحة بعد نصف ثانية
           setTimeout(() => {
             window.location.reload();
           }, 500);
@@ -1202,8 +1415,7 @@
       const togglePassword = document.getElementById("togglePassword");
       if (togglePassword) {
         togglePassword.addEventListener("click", () => {
-          const type =
-            desktopPassword.type === "password" ? "text" : "password";
+          const type = desktopPassword.type === "password" ? "text" : "password";
           desktopPassword.type = type;
           togglePassword.classList.toggle("fa-lock");
           togglePassword.classList.toggle("fa-unlock-alt");
@@ -1217,13 +1429,10 @@
 
       desktopForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (!isCaptchaVerifiedDesktop) {
-          showToast('يرجى إكمال التحقق "لست روبوت" أولاً', true);
-          return;
-        }
 
         const email = desktopEmail.value.trim();
         const password = desktopPassword.value.trim();
+        const remember = desktopRemember.checked;
 
         if (!email.includes("@")) {
           showToast("الرجاء إدخال بريد إلكتروني صحيح", true);
@@ -1234,37 +1443,7 @@
           return;
         }
 
-        desktopLoginBtn.disabled = true;
-        desktopLoginBtn.innerHTML =
-          '<div class="loading-spinner"></div> جاري الدخول...';
-
-        try {
-          const userCredential = await auth.signInWithEmailAndPassword(
-            email,
-            password,
-          );
-          if (desktopRemember.checked) {
-            localStorage.setItem("rememberedEmail", email);
-          } else {
-            localStorage.removeItem("rememberedEmail");
-          }
-          showWelcomeScreen(userCredential.user);
-          showToast("✅ تم تسجيل الدخول بنجاح!");
-        } catch (error) {
-          if (error.code === "auth/user-not-found") {
-            showToast("❌ لا يوجد حساب بهذا البريد", true);
-          } else if (error.code === "auth/wrong-password") {
-            showToast("❌ كلمة المرور غير صحيحة", true);
-          } else if (error.code === "auth/invalid-credential") {
-            showToast("❌ هذا الحساب مسجل بـ Google! استخدم زر تسجيل الدخول بـ Google", true);
-          } else {
-            showToast("❌ " + error.message, true);
-          }
-        } finally {
-          desktopLoginBtn.disabled = false;
-          desktopLoginBtn.innerHTML =
-            '<span>تسجيل الدخول</span><i class="fas fa-arrow-left"></i>';
-        }
+        showCaptchaModal(email, password, remember, true);
       });
 
       // Mobile Login
@@ -1273,9 +1452,7 @@
       const mobilePassword = document.getElementById("mobilePassword");
       const mobileLoginBtn = document.getElementById("mobileLoginBtn");
 
-      const mobileTogglePassword = document.getElementById(
-        "mobileTogglePassword",
-      );
+      const mobileTogglePassword = document.getElementById("mobileTogglePassword");
       if (mobileTogglePassword) {
         mobileTogglePassword.addEventListener("click", () => {
           const type = mobilePassword.type === "password" ? "text" : "password";
@@ -1287,10 +1464,6 @@
 
       mobileForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (!isCaptchaVerifiedMobile) {
-          showToast('يرجى إكمال التحقق "لست روبوت" أولاً', true);
-          return;
-        }
 
         const email = mobileEmail.value.trim();
         const password = mobilePassword.value.trim();
@@ -1304,184 +1477,98 @@
           return;
         }
 
-        mobileLoginBtn.disabled = true;
-        mobileLoginBtn.innerHTML =
-          '<div class="loading-spinner"></div> جاري الدخول...';
-
-        try {
-          const userCredential = await auth.signInWithEmailAndPassword(
-            email,
-            password,
-          );
-          showWelcomeScreen(userCredential.user);
-          showToast("✅ تم تسجيل الدخول بنجاح!");
-        } catch (error) {
-          if (error.code === "auth/user-not-found") {
-            showToast("❌ لا يوجد حساب بهذا البريد", true);
-          } else if (error.code === "auth/wrong-password") {
-            showToast("❌ كلمة المرور غير صحيحة", true);
-          } else if (error.code === "auth/invalid-credential") {
-            showToast("❌ هذا الحساب مسجل بـ Google! استخدم زر تسجيل الدخول بـ Google", true);
-          } else {
-            showToast("❌ " + error.message, true);
-          }
-        } finally {
-          mobileLoginBtn.disabled = false;
-          mobileLoginBtn.innerHTML =
-            '<span>تسجيل الدخول</span><i class="fas fa-arrow-left"></i>';
-        }
+        showCaptchaModal(email, password, false, false);
       });
 
-      // Google Sign-In
+          // Google Sign-In - استخدام popup مع رسالة للمستخدم
+      let isGoogleProcessing = false;
       async function googleSignIn() {
+        if (isGoogleProcessing) {
+          showToast("⚠️ يوجد طلب قيد التنفيذ، يرجى الانتظار", true);
+          return;
+        }
+        
+        isGoogleProcessing = true;
         const provider = new firebase.auth.GoogleAuthProvider();
+        
         try {
           const result = await auth.signInWithPopup(provider);
           showWelcomeScreen(result.user);
           showToast("✅ تم تسجيل الدخول بنجاح عبر Google!");
         } catch (error) {
-          showToast("❌ " + error.message, true);
+          console.error("خطأ في Google:", error);
+          if (error.code === 'auth/popup-blocked') {
+            showToast("❌ يرجى السماح بالنوافذ المنبثقة في المتصفح لتسجيل الدخول عبر Google", true);
+          } else {
+            showToast("❌ " + error.message, true);
+          }
+        } finally {
+          isGoogleProcessing = false;
         }
       }
 
-      document
-        .getElementById("googleBtn")
-        ?.addEventListener("click", googleSignIn);
-
-      // GitHub Sign-In
+      // GitHub Sign-In - استخدام popup
+      let isGithubProcessing = false;
       async function githubSignIn() {
+        if (isGithubProcessing) {
+          showToast("⚠️ يوجد طلب قيد التنفيذ، يرجى الانتظار", true);
+          return;
+        }
+        
+        isGithubProcessing = true;
         const provider = new firebase.auth.GithubAuthProvider();
+        
         try {
           const result = await auth.signInWithPopup(provider);
           showWelcomeScreen(result.user);
           showToast("✅ تم تسجيل الدخول بنجاح عبر GitHub!");
         } catch (error) {
-          showToast("❌ " + error.message, true);
+          console.error("خطأ في GitHub:", error);
+          if (error.code === 'auth/popup-blocked') {
+            showToast("❌ يرجى السماح بالنوافذ المنبثقة في المتصفح لتسجيل الدخول عبر GitHub", true);
+          } else {
+            showToast("❌ " + error.message, true);
+          }
+        } finally {
+          isGithubProcessing = false;
         }
       }
 
-      document
-        .getElementById("githubBtn")
-        ?.addEventListener("click", githubSignIn);
+      document.getElementById("googleBtn")?.addEventListener("click", googleSignIn);
+      document.getElementById("githubBtn")?.addEventListener("click", githubSignIn);
+      
+      // حذف أو تعليق这部分 لأننا لم نعد نستخدم redirect
+      /*
+      window.addEventListener('load', function() {
+        auth.getRedirectResult()...
+      });
+      */
 
       // Forgot Password
-      function handleForgotPassword(isDesktop = true) {
-        const modal = document.createElement("div");
-        modal.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0,0,0,0.5);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10000;
-        `;
-
-        modal.innerHTML = `
-          <div style="background: white; padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;">
-            <h3 style="margin-bottom: 1rem; color: #1e293b;">استعادة كلمة المرور</h3>
-            <p style="margin-bottom: 1rem; color: #64748b;">أدخل بريدك الإلكتروني</p>
-            <input type="email" id="emailInput" placeholder="example@email.com" style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; margin-bottom: 1rem; font-family: inherit;">
-            <div style="display: flex; gap: 1rem;">
-              <button id="confirmBtn" style="flex: 1; padding: 0.8rem; background: #6366f1; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إرسال</button>
-              <button id="cancelBtn" style="flex: 1; padding: 0.8rem; background: #ef4444; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">إلغاء</button>
-            </div>
-          </div>
-        `;
-
-        document.body.appendChild(modal);
-
-        const emailInput = modal.querySelector("#emailInput");
-        const confirmBtn = modal.querySelector("#confirmBtn");
-        const cancelBtn = modal.querySelector("#cancelBtn");
-
-        confirmBtn.onclick = () => {
-          const email = emailInput.value.trim();
-          modal.remove();
-          if (email && email.includes("@")) {
-            showToast("📧 جاري إرسال رابط الاستعادة...");
-            auth.sendPasswordResetEmail(email)
-              .then(() => {
-                showToast(`✅ تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
-              })
-              .catch((error) => {
-                if (error.code === "auth/user-not-found") {
-                  showToast("❌ لا يوجد حساب مرتبط بهذا البريد الإلكتروني", true);
-                } else {
-                  showToast("❌ " + error.message, true);
-                }
-              });
-          } else if (email) {
-            showToast("❌ الرجاء إدخال بريد إلكتروني صحيح", true);
-          }
-        };
-
-        cancelBtn.onclick = () => {
-          modal.remove();
-        };
-
-        emailInput.onkeypress = (e) => {
-          if (e.key === "Enter") {
-            const email = emailInput.value.trim();
-            modal.remove();
-            if (email && email.includes("@")) {
-              showToast("📧 جاري إرسال رابط الاستعادة...");
-              auth.sendPasswordResetEmail(email)
-                .then(() => {
-                  showToast(`✅ تم إرسال رابط استعادة كلمة المرور إلى ${email}`);
-                })
-                .catch((error) => {
-                  showToast("❌ " + error.message, true);
-                });
-            } else if (email) {
-              showToast("❌ الرجاء إدخال بريد إلكتروني صحيح", true);
-            }
-          }
-        };
-      }
-
-      document
-        .getElementById("forgotPassword")
-        ?.addEventListener("click", (e) => {
-          e.preventDefault();
-          handleForgotPassword(true);
-        });
+      document.getElementById("forgotPassword")?.addEventListener("click", (e) => {
+        window.location.href = "forgot-password.html";
+      });
 
       // Redirects
-      document
-        .getElementById("signupRedirectDesktop")
-        ?.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = "signup.html";
-        });
+      document.getElementById("signupRedirectDesktop")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.href = "signup.html";
+      });
 
-      document
-        .getElementById("mobileSignupLink")
-        ?.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.location.href = "signup.html";
-        });
+      document.getElementById("mobileSignupLink")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.href = "signup.html";
+      });
 
-      // ✅ تأكد من ربط حدث تسجيل الخروج بشكل صحيح
       if (logoutBtn) {
         logoutBtn.addEventListener("click", logout);
-      } else {
-        console.error("❌ زر تسجيل الخروج غير موجود في الصفحة!");
       }
 
-      // مراقبة حالة تسجيل الدخول
       auth.onAuthStateChanged((user) => {
         if (user) {
           showWelcomeScreen(user);
         }
       });
-
-      // تأكد من أن حقول البريد وكلمة المرور معطلة في البداية
-      disableDesktopForm();
-      disableMobileForm();
     </script>
   </body>
 </html>
